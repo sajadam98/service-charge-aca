@@ -12,9 +12,15 @@ public class EfUserRepository(EfDataContext dbContext) : UserRepository
         await dbContext.Users.AddAsync(newUser);
     }
 
-    public async Task<User?> GetByIdAsync(int id)
+    public async Task<ShowUserDto?> GetByIdAsync(int id)
     {
-        return await dbContext.Users.FirstOrDefaultAsync(_ => _.Id == id);
+        return await dbContext.Set<User>()
+            .Where(_=>_.Id == id)
+            .Select(_ => new ShowUserDto()
+            {
+                JoinDate = _.JoinDate,
+                Name = _.Name
+            }).FirstOrDefaultAsync();
     }
 
     public async Task<bool> CheckIfExistsAsync(string userName)
@@ -29,7 +35,9 @@ public class EfUserRepository(EfDataContext dbContext) : UserRepository
 
     public async Task<int> CalculateYearsHistoryAsync(int UserId)
     {
-        var temp = await dbContext.Users.Where(_ => _.Id == UserId).Select(_ =>
+        var temp = await dbContext.Users
+            .Where(_ => _.Id == UserId)
+            .Select(_ =>
             new
             {
                 History = DateTime.Now.Year - _.JoinDate.Year

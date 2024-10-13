@@ -6,7 +6,7 @@ namespace Library.Services.Users.Contracts;
 public interface UserRepository
 {
     Task CreateAsync(User newUser);
-    Task<User?> GetByIdAsync(int id);
+    Task<ShowUserDto?> GetByIdAsync(int id);
     Task<bool> CheckIfExistsAsync(string userName);
     Task<bool> CheckIfExistsByIdAsync(int id);
     Task<int> CalculateYearsHistoryAsync(int UserId);

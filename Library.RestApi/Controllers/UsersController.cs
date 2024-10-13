@@ -11,14 +11,14 @@ public class UsersController(UserService userService) : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
     {
-        var userDto = await userService.GetByIdAsync(id);
+        var userDto = await userService.GetById(id);
         return Ok(userDto);
     }
 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var dtos = await userService.GetAllAsync();
+        var dtos = await userService.GetAll();
         return Ok(dtos);
     }
 

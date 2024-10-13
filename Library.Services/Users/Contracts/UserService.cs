@@ -5,6 +5,6 @@ namespace Library.Services.Users.Contracts;
 public interface UserService
 {
     Task<int> CreateAsync(CreateUserDto userDto);
-    Task<ShowUserDto> GetByIdAsync(int id);
-    Task<IEnumerable<ShowAllUsersDto>> GetAllAsync();
+    Task<ShowUserDto?> GetById(int id);
+    Task<IEnumerable<ShowAllUsersDto>> GetAll();
 }

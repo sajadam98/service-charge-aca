@@ -28,19 +28,12 @@ public class UserAppService(
         return newUser.Id;
     }
 
-    public async Task<ShowUserDto> GetByIdAsync(int id)
+    public async Task<ShowUserDto?> GetById(int id)
     {
-        var user = await userRepository.GetByIdAsync(id)
-                   ?? throw new Exception("User not found");
-        return new ShowUserDto
-        {
-            Id = user.Id,
-            Name = user.Name,
-            JoinDate = user.JoinDate
-        };
+       return await userRepository.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<ShowAllUsersDto>> GetAllAsync()
+    public async Task<IEnumerable<ShowAllUsersDto>> GetAll()
     {
         var dtos = await userRepository.GetAllAsync();
         foreach (var dto in dtos) dto.Penalty *= 20000;

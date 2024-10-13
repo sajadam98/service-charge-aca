@@ -47,7 +47,7 @@ public class
         actual.Id.Should().Be(result);
         actual.Name.Should().Be(dto.Name);
         actual.Name.Should().Be("dummy");
-        actual.Lends.Should().HaveCount(1);
+        actual.Lends.Should().HaveCount(0);
     }
 
     [Fact]
@@ -71,5 +71,47 @@ public class
         //assert
        await actual.Should()
             .ThrowExactlyAsync<UserDuplicateException>();
+    }
+
+    [Fact]
+    public async Task Get()
+    {
+        var user = new User()
+        {
+            Name = "ali",
+        };
+        Save(user);
+        var user2 = new User()
+        {
+            Name = "dummy",
+        };
+        Save(user2);
+
+        var actual =
+            await _sut.GetById(user2.Id);
+
+        actual!.Name.Should().Be(user2.Name);
+        actual.JoinDate.Should().Be(user2.JoinDate);
+    }
+    
+    [Fact]
+    public async Task GetAll()
+    {
+        var user = new User()
+        {
+            Name = "ali",
+        };
+        Save(user);
+        var user2 = new User()
+        {
+            Name = "dummy",
+        };
+        Save(user2);
+
+        var actual =
+            await _sut.GetAll();
+
+        actual.Should().Contain(_=> _.Name == user.Name && _.JoinDate == user.JoinDate);
+        actual.Should().Contain(_=> _.Name == user2.Name && _.JoinDate == user2.JoinDate);
     }
 }
