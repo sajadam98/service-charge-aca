@@ -9,19 +9,15 @@ public class BookAppService(
     UnitOfWork unitOfWork,
     BookRepository bookRepository) : BookService
 {
-    public async Task<ShowBookDto> GetByIdAsync(int id)
+    public async Task<GetBookById?> GetByIdAsync(int id)
     {
-        var book = await bookRepository.GetByIdAsync(id)
-                   ?? throw new Exception("Book not found");
-
-        return new ShowBookDto
-        {
-            Id = book.Id,
-            Title = book.Title
-        };
+        return 
+            await bookRepository
+                .GetByIdAsync(id);
     }
 
-    public async Task<int> CreateAsync(CreateBookDto bookDto)
+    public async Task<int> CreateAsync(
+        CreateBookDto bookDto)
     {
         var newBook = new Book
         {
@@ -35,5 +31,15 @@ public class BookAppService(
     public async Task<IEnumerable<ShowAllBooksDto>> GetAllAsync()
     {
         return await bookRepository.GetAllAsync();
+    }
+
+    public async Task Delete(int id)
+    {
+        var book =
+            await bookRepository.FindById(id);
+
+        bookRepository.Delete(book);
+
+        await unitOfWork.SaveAsync();
     }
 }

@@ -7,9 +7,12 @@ namespace Library.Persistence.Ef.Books;
 
 public class EfBookRepository(EfDataContext dbContext) : BookRepository
 {
-    public async Task<Book?> GetByIdAsync(int id)
+    public async Task<GetBookById?> GetByIdAsync(int id)
     {
-        return await dbContext.Books.FirstOrDefaultAsync(_ => _.Id == id);
+        return await dbContext.Books
+            .Where(_=>_.Id == id)
+            .Select(_=> new GetBookById(_.Title))
+            .FirstOrDefaultAsync();
     }
 
     public async Task CreateAsync(Book book)
@@ -52,5 +55,15 @@ public class EfBookRepository(EfDataContext dbContext) : BookRepository
     public async Task<bool> CheckIfExistsByIdAsync(int lendDtoBookId)
     {
         return await dbContext.Books.AnyAsync(_ => _.Id == lendDtoBookId);
+    }
+
+    public async Task<Book?> FindById(int id)
+    {
+        return await dbContext.Books.FindAsync(id);
+    }
+
+    public void Delete(Book book)
+    {
+        dbContext.Books.Remove(book);
     }
 }
