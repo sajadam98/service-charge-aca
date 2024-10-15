@@ -55,10 +55,7 @@ public class
         Create_throw_exception_when_user_duplicated()
     {
         //arrange
-        var user = new User()
-        {
-            Name = "ali",
-        };
+        var user = CreateUser("ali");
         Save(user);
         var dto = new CreateUserDto()
         {
@@ -76,15 +73,8 @@ public class
     [Fact]
     public async Task Get()
     {
-        var user = new User()
-        {
-            Name = "ali",
-        };
-        Save(user);
-        var user2 = new User()
-        {
-            Name = "dummy",
-        };
+        CreateUser();
+        var user2 = CreateUser();
         Save(user2);
 
         var actual =
@@ -93,19 +83,13 @@ public class
         actual!.Name.Should().Be(user2.Name);
         actual.JoinDate.Should().Be(user2.JoinDate);
     }
-    
+
     [Fact]
     public async Task GetAll()
     {
-        var user = new User()
-        {
-            Name = "ali",
-        };
+        var user = CreateUser();
         Save(user);
-        var user2 = new User()
-        {
-            Name = "dummy",
-        };
+        var user2 = CreateUser("ali");
         Save(user2);
 
         var actual =
@@ -113,5 +97,122 @@ public class
 
         actual.Should().Contain(_=> _.Name == user.Name && _.JoinDate == user.JoinDate);
         actual.Should().Contain(_=> _.Name == user2.Name && _.JoinDate == user2.JoinDate);
+    }
+
+    [Fact]
+    public async Task Update_update_a_user_properly()
+    {
+        var user =CreateUser();
+        Save(user);
+        var dto = new UserUpdateDto()
+        {
+            Name = "new"
+        };
+
+        await _sut.Update(user.Id,dto);
+
+        var actual = ReadContext.Set<User>()
+            .Single(_ => _.Id == user.Id);
+        actual.Name.Should().Be(dto.Name);
+    }
+
+    [Fact]
+    public async Task
+        Update_throw_exception_when_user_not_found()
+    {
+        var dummyId = -1;
+        var dto = new UserUpdateDto();
+
+        var actual = () => _sut.Update(
+            dummyId,
+            dto);
+
+        await actual.Should()
+            .ThrowExactlyAsync<
+                UserNotFoundException>();
+    }
+    
+    [Fact]
+    public async Task
+        Update_2throw_exception_when_user_duplicated()
+    {
+        var user = CreateUser("ali");
+        Save(user);
+        var dto = new UserUpdateDto()
+        {
+            Name = "ali"
+        };
+
+        await _sut.Update(
+            user.Id,
+            dto);
+
+        var actual = ReadContext.Set<User>()
+            .Single(_ => _.Id == user.Id);
+        actual.Name.Should().Be(dto.Name);
+    }
+    
+    [Fact]
+    public async Task
+        Update_throw_exception_when_user_duplicated()
+    {
+        var user = new User()
+        {
+            Name = "ali"
+        };
+        Save(user);
+        var user2 = new User()
+        {
+            Name = "reza"
+        };
+        Save(user2);
+        var dto = new UserUpdateDto()
+        {
+            Name = "ali"
+        };
+
+        var actual = () => _sut.Update(
+            user2.Id,
+            dto);
+
+        await actual.Should().ThrowExactlyAsync<UserDuplicateException>();
+    }
+
+    [Fact]
+    public async Task Delete()
+    {
+        var user = CreateUser();
+        Save(user);
+        var user2 = CreateUser();
+        Save(user2);
+
+        await _sut.Delete(user2.Id);
+        
+        var actual = ReadContext.Set<User>()
+            .SingleOrDefault(_=>_.Id == user2.Id);
+        actual.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task Delete2()
+    {
+        var dummyId = -1;
+
+        var actual =
+            () => _sut.Delete(dummyId);
+
+        await actual.Should()
+            .ThrowExactlyAsync<
+                UserNotFoundException>();
+    }
+    
+    
+    private User CreateUser(string name = "dummy")
+    {
+        var user = new User()
+        {
+            Name = name,
+        };
+        return user;
     }
 }

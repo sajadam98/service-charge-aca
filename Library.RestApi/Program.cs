@@ -15,6 +15,7 @@ using Library.Services.Rates.Contracts;
 using Library.Services.UnitOfWorks;
 using Library.Services.Users;
 using Library.Services.Users.Contracts;
+using Library.Services.Users.Users.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

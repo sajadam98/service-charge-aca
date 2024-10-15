@@ -5,6 +5,7 @@ using Library.Services.Lends.Contracts.Dtos;
 using Library.Services.Rates.Contracts;
 using Library.Services.UnitOfWorks;
 using Library.Services.Users.Contracts;
+using Library.Services.Users.Users.Contracts;
 
 namespace Library.Services.Lends;
 
