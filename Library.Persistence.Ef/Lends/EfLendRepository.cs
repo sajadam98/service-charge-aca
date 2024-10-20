@@ -47,9 +47,10 @@ public class EfLendRepository(EfDataContext dbContext) : LendRepository
             baseQuery = baseQuery.Where(_ => _.BookId == bookId);
         if (userId != null)
             baseQuery = baseQuery.Where(_ => _.UserId == userId);
-
-        return await baseQuery.Where(_ => _.IsReturned == false)
-            .Include(_ => _.User).Include(_ => _.Book).Select(_ =>
+        
+        return await baseQuery
+            .Where(_ => _.IsReturned == false)
+            .Select(_ =>
                 new ShowActiveLendDto
                 {
                     BookName = _.Book.Title,

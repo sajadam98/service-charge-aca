@@ -9,7 +9,8 @@ namespace Library.RestApi.Controllers;
 [ApiController]
 public class LendsController(
     LendsService lendsService,
-    ReturnLendHandler returnLendHandler) : ControllerBase
+    ReturnLendHandler returnLendHandler,
+    LendQuery lendQuery) : ControllerBase
 {
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById([FromRoute] int id)
@@ -22,7 +23,7 @@ public class LendsController(
     public async Task<IActionResult> GetAll([FromQuery] int? bookId,
         [FromQuery] int? userId)
     {
-        var lendDtos = await lendsService.GetAllAsync(bookId, userId);
+        var lendDtos = await lendQuery.GetAllAsync(bookId, userId);
         return Ok(lendDtos);
     }
 

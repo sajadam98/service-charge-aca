@@ -13,8 +13,7 @@ public class LendsAppService(
     UnitOfWork unitOfWork,
     LendRepository lendRepository,
     UserRepository userRepository,
-    BookRepository bookRepository,
-    RatesService ratesService) : LendsService
+    BookRepository bookRepository) : LendsService
 {
     public async Task<ShowLendDto> GetByIdAsync(int id)
     {
