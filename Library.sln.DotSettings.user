@@ -1,0 +1,19 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7023ee1f_002Dc4f5_002D42eb_002Dab07_002Db1f908f51c90/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="create_book" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Create_throw_exception_when_user_duplicated&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Get&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.GetAll&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Update&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Update_throw_exception_when_user_not_found&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Update_throw_exception_when_user_duplicated&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Update_2throw_exception_when_user_duplicated&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Delete&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Users.UserServiceTests.Delete2&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Books.BookServiceTests.Create_create_a_book_properly&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Books.BookServiceTests.GetById_get_book_by_id&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Books.BookServiceTests.Delete_delete_a_book_properly&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Lends.LendQueryTests.GetAll&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::A129D994-E2CA-4E3F-AAFF-D2A7F8DB4167::net8.0::Library.Services.Tests.Lends.LendQueryTests.GetAll_filter_book&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
