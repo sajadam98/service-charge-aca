@@ -8,6 +8,11 @@ public class EFBlockRepository(EfDataContext context) : BlockRepository
     public void Add(Block block)
     {
         context.Set<Block>().Add(block);
-        context.SaveChanges();
+    }
+
+    public bool IsDuplicate(string name)
+    {
+        return context.Set<Block>()
+            .Any(_ => _.Name == name);
     }
 }

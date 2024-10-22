@@ -9,6 +9,11 @@ public class EfUnitOfWork(EfDataContext dbContext) : UnitOfWork
         await dbContext.SaveChangesAsync();
     }
 
+    public void Save()
+    {
+        dbContext.SaveChanges();
+    }
+
     public async Task Begin()
     {
         await dbContext.Database.BeginTransactionAsync();
