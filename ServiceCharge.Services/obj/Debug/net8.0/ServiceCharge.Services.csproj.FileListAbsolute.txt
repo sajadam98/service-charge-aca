@@ -1,0 +1,16 @@
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\bin\Debug\net8.0\ServiceCharge.Services.deps.json
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\bin\Debug\net8.0\ServiceCharge.Services.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\bin\Debug\net8.0\ServiceCharge.Services.pdb
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\bin\Debug\net8.0\ServiceCharge.Entities.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\bin\Debug\net8.0\ServiceCharge.Entities.pdb
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.csproj.AssemblyReference.cache
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.AssemblyInfoInputs.cache
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.AssemblyInfo.cs
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.csproj.CoreCompileInputs.cache
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.sourcelink.json
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceC.7D6F32A5.Up2Date
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\refint\ServiceCharge.Services.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ServiceCharge.Services.pdb
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Services\obj\Debug\net8.0\ref\ServiceCharge.Services.dll

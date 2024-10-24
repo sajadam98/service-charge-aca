@@ -10,4 +10,8 @@
       <ProjectReference Include="..\ServiceCharge.Services\ServiceCharge.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CreateFloorWithUnits\Contracts\Dtos\" />
+    </ItemGroup>
+
 </Project>

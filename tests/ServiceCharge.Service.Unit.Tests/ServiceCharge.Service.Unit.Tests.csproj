@@ -29,4 +29,11 @@
       <ProjectReference Include="..\..\ServiceCharge.Persistence.Ef\ServiceCharge.Persistence.Ef.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="appsetting.json" />
+      <Content Include="appsetting.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

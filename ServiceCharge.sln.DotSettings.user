@@ -1,9 +1,0 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7023ee1f_002Dc4f5_002D42eb_002Dab07_002Db1f908f51c90/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="create_book" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::17143AF0-7C44-4847-9DA6-638FDFBBE1FC::net8.0::ServiceCharge.Service.Unit.Tests.UnitTest1.Test1&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::17143AF0-7C44-4847-9DA6-638FDFBBE1FC::net8.0::ServiceCharge.Service.Unit.Tests.Blocks.BlockServiceTests.Add_add_a_block_properly&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::17143AF0-7C44-4847-9DA6-638FDFBBE1FC::net8.0::ServiceCharge.Service.Unit.Tests.Blocks.BlockServiceTests.Add_throw_exception_when_block_name_duplicated&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::17143AF0-7C44-4847-9DA6-638FDFBBE1FC::net8.0::ServiceCharge.Service.Unit.Tests.Blocks.BlockServiceTests.AddWithFloor_&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

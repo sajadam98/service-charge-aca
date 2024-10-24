@@ -2,5 +2,6 @@
 
 public interface BlockQuery
 {
-    
+    HashSet<GetBlockDto> GetAll();
+     HashSet<GetBlockWithFloorsDto> GetAllWithFloors();
 }

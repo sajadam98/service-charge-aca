@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "d2kSYeojkGeZNEsewMOhUX7Ics+NE+AE5afgrAFVOLI=",
+  "Source": "ServiceCharge.RestApi",
+  "BasePath": "_content/ServiceCharge.RestApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

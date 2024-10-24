@@ -1,0 +1,49 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "ServiceCharge.Application/1.0.0": {
+        "dependencies": {
+          "ServiceCharge.Services": "1.0.0"
+        },
+        "runtime": {
+          "ServiceCharge.Application.dll": {}
+        }
+      },
+      "ServiceCharge.Entities/1.0.0": {
+        "runtime": {
+          "ServiceCharge.Entities.dll": {}
+        }
+      },
+      "ServiceCharge.Services/1.0.0": {
+        "dependencies": {
+          "ServiceCharge.Entities": "1.0.0"
+        },
+        "runtime": {
+          "ServiceCharge.Services.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ServiceCharge.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ServiceCharge.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ServiceCharge.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

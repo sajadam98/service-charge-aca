@@ -1,0 +1,12 @@
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\bin\Debug\net8.0\ServiceCharge.Infrastructure.deps.json
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\bin\Debug\net8.0\ServiceCharge.Infrastructure.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\bin\Debug\net8.0\ServiceCharge.Infrastructure.pdb
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.AssemblyInfo.cs
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.sourcelink.json
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\refint\ServiceCharge.Infrastructure.dll
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ServiceCharge.Infrastructure.pdb
+C:\Users\pars pc\Desktop\Test2\ServiceCharge\ServiceCharge.Infrastructure\obj\Debug\net8.0\ref\ServiceCharge.Infrastructure.dll

@@ -1,0 +1,7 @@
+
+{
+  "PersistenceConfig": {
+    "ConnectionString": "Data Source=Cloud4;database=BlocksDb;User Id=CLOUD4;Password=21102110;TrustServerCertificate=true;"
+  }
+}
+
