@@ -15,4 +15,9 @@ public class EFBlockRepository(EfDataContext context) : BlockRepository
         return context.Set<Block>()
             .Any(_ => _.Name == name);
     }
+
+    public bool IsExistById(int blockId)
+    {
+        return context.Set<Block>().Any(b => b.Id == blockId);
+    }
 }

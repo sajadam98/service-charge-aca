@@ -1,4 +1,5 @@
 ﻿using ServiceCharge.Entities;
+using ServiceCharge.Services.Blocks.Contracts.DTOs;
 using ServiceCharge.Services.Blocks.Exceptions;
 using ServiceCharge.Services.UnitOfWorks;
 
