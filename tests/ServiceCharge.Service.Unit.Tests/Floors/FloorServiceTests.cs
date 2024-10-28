@@ -97,4 +97,56 @@ public class FloorServiceTests : BusinessIntegrationTest
                                     f.Name == floor.Name &&
                                     f.BlockId == floor.BlockId);
     }
+    
+    [Fact]
+    public void Add_Throw_Exception_When_Block_Is_Full()
+    {
+        var block = new Block
+        {
+            Name = "dummy_block",
+            CreationDate = DateTime.Now,
+            FloorCount = 1,
+            
+        };
+        block.Floors = new HashSet<Floor>()
+        {
+            new()
+            {
+                Name = "1",
+                UnitCount = 4,
+            }
+        };
+        Save(block);
+        var dto = new AddFloorDto()
+        {
+            Name = "floor2",
+            UnitCount = 4
+        };
+        
+        var actual = () => _sut.Add(block.Id,dto);
+
+        
+        actual.Should().ThrowExactly<MaxCountFloorException>();
+        ReadContext.Set<Floor>().Should().HaveCount(1);
+    }
+
+
+    [Fact]
+    public void Add_Floor_to_two_different_block_and_not_throw_exception()
+    {
+        var block = new Block
+        {
+            Name = "dummy_block",
+            CreationDate = DateTime.Now,
+            FloorCount = 1,
+            
+        };
+        Save(block);
+        var block1 = new Block
+        {
+            Name = "dummy_block2",
+        };
+        Save(block1);
+        
+    }
 }

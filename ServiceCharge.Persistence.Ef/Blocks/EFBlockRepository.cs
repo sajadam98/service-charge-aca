@@ -1,4 +1,5 @@
-﻿using ServiceCharge.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ServiceCharge.Entities;
 using ServiceCharge.Services.Blocks.Contracts;
 
 namespace ServiceCharge.Persistence.Ef.Blocks;
@@ -20,4 +21,10 @@ public class EFBlockRepository(EfDataContext context) : BlockRepository
     {
         return context.Set<Block>().Any(b => b.Id == blockId);
     }
+
+    public Block? FindWithFloors(int dtoBlockId)
+    {
+        return context.Set<Block>().Include(_=>_.Floors)
+            .FirstOrDefault(_=>_.Id == dtoBlockId);
+    }   
 }

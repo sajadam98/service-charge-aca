@@ -7,4 +7,5 @@ public interface BlockRepository
     void Add(Block block);
     bool IsDuplicate(string name);
     bool IsExistById(int blockId);
+    Block? FindWithFloors(int dtoBlockId);
 }

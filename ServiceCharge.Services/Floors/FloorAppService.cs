@@ -21,6 +21,12 @@ public class FloorAppService(
         {
             throw new BlockNotFoundException();
         }
+
+        if(!ValidateAddFloor(blockId))
+        {
+            throw new MaxCountFloorException();
+        }
+        
         var isFloorExistWithSameName =
             repository.IsFloorExistWithSameName(dto.Name, blockId);
         if (isFloorExistWithSameName)
@@ -36,5 +42,14 @@ public class FloorAppService(
         repository.Add(floor);
         unitOfWork.Save();
         return floor.Id;
+    }
+    
+    private bool ValidateAddFloor(int blockId)
+    {
+        var block = blockRepository.FindWithFloors(blockId);
+
+        if (!(block!.FloorCount > block.Floors.Count))
+            return false;
+        return true;
     }
 }
