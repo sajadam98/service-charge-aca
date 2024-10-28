@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ServiceCharge.Entities;
 using ServiceCharge.Services.Blocks.Contracts;
+using ServiceCharge.Services.Floors.Contracts.Dto;
 
 namespace ServiceCharge.Persistence.Ef.Blocks;
 
@@ -17,9 +18,14 @@ public class EFBlockRepository(EfDataContext context) : BlockRepository
             .Any(_ => _.Name == name);
     }
 
-    public bool IsExistById(int blockId)
+    public GetBlockFloorCapacityAndFloorCountDto? FindById(int blockId)
     {
-        return context.Set<Block>().Any(b => b.Id == blockId);
+        return context.Set<Block>().Where(b => b.Id == blockId)
+            .Select(b => new GetBlockFloorCapacityAndFloorCountDto
+            {
+                FloorCapacity = b.FloorCount,
+                FloorCount = b.Floors.Count
+            }).FirstOrDefault();
     }
 
     public Block? FindWithFloors(int dtoBlockId)

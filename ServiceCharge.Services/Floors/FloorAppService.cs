@@ -16,23 +16,24 @@ public class FloorAppService(
 {
     public int Add(int blockId, AddFloorDto dto)
     {
-        var isBlockExist = blockRepository.IsExistById(blockId);
-        if (!isBlockExist)
+        var block = blockRepository.FindById(blockId);
+        if (block is null)
         {
             throw new BlockNotFoundException();
         }
 
-        if(!ValidateAddFloor(blockId))
+        if (block.FloorCapacity <= block.FloorCount)
         {
-            throw new MaxCountFloorException();
+            throw new BlockFloorsCapacityFulledException();
         }
-        
+
         var isFloorExistWithSameName =
             repository.IsFloorExistWithSameName(dto.Name, blockId);
         if (isFloorExistWithSameName)
         {
             throw new DuplicateFloorNameException();
         }
+
         var floor = new Floor
         {
             Name = dto.Name,
@@ -42,14 +43,5 @@ public class FloorAppService(
         repository.Add(floor);
         unitOfWork.Save();
         return floor.Id;
-    }
-    
-    private bool ValidateAddFloor(int blockId)
-    {
-        var block = blockRepository.FindWithFloors(blockId);
-
-        if (!(block!.FloorCount > block.Floors.Count))
-            return false;
-        return true;
     }
 }
