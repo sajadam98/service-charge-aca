@@ -1,9 +1,6 @@
 ﻿using FluentAssertions;
 using ServiceCharge.Entities;
-using ServiceCharge.Persistence.Ef.Floors;
-using ServiceCharge.Persistence.Ef.UnitOfWorks;
 using ServiceCharge.Services.Blocks.Exceptions;
-using ServiceCharge.Services.Floors;
 using ServiceCharge.Services.Floors.Contracts;
 using ServiceCharge.Services.Floors.Contracts.Dto;
 using ServiceCharge.Services.Floors.Exceptions;
@@ -166,4 +163,112 @@ public class FloorServiceTests : BusinessIntegrationTest
             .And.ContainSingle(f =>
                 f.Id == floor.Id && f.BlockId == floor.BlockId);
     }
+
+    [Fact]
+    public void Update_Floor_properly()
+    {
+        var floors = new HashSet<Floor>()
+        {
+            new Floor()
+            {
+                Name = "1",
+                UnitCount = 3
+            },
+            {
+                new Floor()
+                {
+                    Name = "2",
+                    UnitCount = 3
+                }
+            }
+        };
+        var block = CreateBlock("name", DateTime.UtcNow, 2, floors);
+        Save(block);
+
+        var updateDto = new UpdateFloorDto()
+        {
+            Name = "name2"
+        };
+
+        var floorId = block.Floors.Select(_ => _.Id).First();
+
+
+        _sut.Update(updateDto, floorId);
+
+        var actual = ReadContext.Set<Floor>().Find(floorId);
+
+        actual!.Name.Should().Be(updateDto.Name);
+    }
+
+    [Fact]
+    public void Update_throw_exception_when_floor_not_found()
+    {
+        var floorId = -1;
+
+        var updateDto = new UpdateFloorDto()
+        {
+            Name = "name2"
+        };
+
+        var actual = () => _sut.Update(updateDto, floorId);
+
+        actual.Should().ThrowExactly<FloorNotFoundException>();
+    }
+
+    [Fact]
+    public void Update_throw_exception_when_floor_name_is_duplicate()
+    {
+        var floors = new HashSet<Floor>()
+        {
+            new Floor()
+            {
+                Name = "1",
+                UnitCount = 3
+            },
+            {
+              new Floor()
+                {
+                    Name = "2",
+                    UnitCount = 3
+                }
+            }
+        };
+        var block = CreateBlock("name", DateTime.UtcNow, 2, floors);
+        Save(block);
+
+        var updateDto = new UpdateFloorDto()
+        {
+            Name = "1"
+        };
+
+        var floorId = block.Floors.Select(_ => _.Id).LastOrDefault();
+        var actual = () => _sut.Update(updateDto, floorId);
+
+        actual.Should().ThrowExactly<DuplicateFloorNameException>();
+    }
+
+
+
+    private static AddFloorDto CreateAddFloorDto(int blockId, string name, int unitCount)
+    {
+        var dto = new AddFloorDto()
+        {
+            Name = name,
+            UnitCount = unitCount
+        };
+        return dto;
+    }
+
+    private static Block CreateBlock(string name, DateTime dateTime, int flourCount, HashSet<Floor> floors)
+    {
+        return new Block()
+        {
+            Name = name,
+            CreationDate = dateTime,
+            FloorCount = flourCount,
+            Floors = floors
+        };
+    }
+
+
 }

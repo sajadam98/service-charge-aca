@@ -7,12 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\ServiceCharge.Persistence.Ef\ServiceCharge.Persistence.Ef.csproj" />
-      <ProjectReference Include="..\..\ServiceCharge.Services\ServiceCharge.Services.csproj" />
+      <Compile Remove="Blocks\DTOs\**" />
+      <EmbeddedResource Remove="Blocks\DTOs\**" />
+      <None Remove="Blocks\DTOs\**" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Blocks\DTOs\" />
+      <ProjectReference Include="..\..\ServiceCharge.Persistence.Ef\ServiceCharge.Persistence.Ef.csproj" />
+      <ProjectReference Include="..\..\ServiceCharge.Services\ServiceCharge.Services.csproj" />
     </ItemGroup>
 
 </Project>
