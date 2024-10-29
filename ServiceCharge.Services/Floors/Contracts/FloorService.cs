@@ -8,10 +8,3 @@ public interface FloorService
     void Update(int floorId,UpdateFloorDto dto);
     void Delete(int floorId);
 }
-
-public class UpdateFloorDto
-{
-    public int UnitCount { get; set; }
-    public required string Name { get; set; }
-    
-}

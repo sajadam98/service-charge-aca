@@ -10,9 +10,3 @@ public interface FloorRepository
     void Update(Floor floor);
     void Delete(Floor floor);
 }
-
-public class FindByIdWithUnitsCountDto
-{
-    public Floor? Floor { get; set; }
-    public int ExistingUnitsCount { get; set; }
-}
