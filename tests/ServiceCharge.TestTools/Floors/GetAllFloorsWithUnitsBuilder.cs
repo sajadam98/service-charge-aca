@@ -1,4 +1,4 @@
-﻿namespace ServiceCharge.Service.Unit.Tests.Floors.FactoryBuilder;
+﻿namespace ServiceCharge.TestTools.Floors;
 
 public class GetAllFloorsWithUnitsBuilder
 {

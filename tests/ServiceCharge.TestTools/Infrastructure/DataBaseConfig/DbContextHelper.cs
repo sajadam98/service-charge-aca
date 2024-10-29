@@ -1,4 +1,6 @@
-namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig;
+using Microsoft.EntityFrameworkCore;
+
+namespace ServiceCharge.TestTools.Infrastructure.DataBaseConfig;
 
 public static class DbContextHelper
 {

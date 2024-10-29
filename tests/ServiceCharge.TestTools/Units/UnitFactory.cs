@@ -1,8 +1,9 @@
-﻿namespace ServiceCharge.Service.Unit.Tests.Units.FactoryBuilder;
+﻿namespace ServiceCharge.TestTools.Units;
 
 public static class UnitFactory
 {
-    public static Entities.Units.Unit Create(string name = "unit",int floorId = 1, bool isActive = true)
+    public static Entities.Units.Unit Create(string name = "unit",
+        int floorId = 1, bool isActive = true)
     {
         return new Entities.Units.Unit()
         {
@@ -12,18 +13,19 @@ public static class UnitFactory
         };
     }
 
-    public static AddUnitDto AddUnitDto(string name = "unit", bool isActive = true,int floorId = 0)
+    public static AddUnitDto AddUnitDto(string name = "unit",
+        bool isActive = true)
     {
         return new AddUnitDto
         {
             Name = name,
             IsActive = isActive,
-            FloorId = floorId
         };
     }
 
-    
-    public static GetAllUnitsDto GetAll(int id,string name = "Unit", int floorId = 0,bool isActive = true)
+
+    public static GetAllUnitsDto GetAll(int id, string name = "Unit",
+        int floorId = 0, bool isActive = true)
     {
         return new GetAllUnitsDto()
         {
@@ -34,7 +36,8 @@ public static class UnitFactory
         };
     }
 
-    public static UpdateUnitDto UpdateUnitDto(string name = "UnitUpdated",int floorId = 1,bool isActive = true)
+    public static UpdateUnitDto UpdateUnitDto(string name = "UnitUpdated",
+        int floorId = 1, bool isActive = true)
     {
         return new UpdateUnitDto
         {
@@ -43,10 +46,11 @@ public static class UnitFactory
             FloorId = floorId
         };
     }
-    
-    public static GetAllUnitsWithBlockNameAndFloorNameDto GetAllUnitsWithInfo(int id, string name = "Unit"
-            , int floorId = 0,bool isActive = true
-            ,string floorName = "",string blockName = "")
+
+    public static GetAllUnitsWithBlockNameAndFloorNameDto
+        GetAllUnitsWithInfo(int id, string name = "Unit"
+            , int floorId = 0, bool isActive = true
+            , string floorName = "", string blockName = "")
     {
         return new GetAllUnitsWithBlockNameAndFloorNameDto()
         {

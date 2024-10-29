@@ -1,5 +1,7 @@
-﻿using ServiceCharge.Service.Unit.Tests.Floors.FactoryBuilder;
-using ServiceCharge.Service.Unit.Tests.Units.FactoryBuilder;
+﻿using ServiceCharge.TestTools.Blocks;
+using ServiceCharge.TestTools.Floors;
+using ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration;
+using ServiceCharge.TestTools.Units;
 
 namespace ServiceCharge.Service.Unit.Tests.Units;
 
@@ -23,15 +25,15 @@ public class UnitServiceTests : BusinessIntegrationTest
         Save(block1);
         var floor1 = FloorFactory.Generate(block1.Id, "Floor1", block1.Id);
         Save(floor1);
-        var dto = UnitFactory.AddUnitDto("Unit1", true, floor1.Id);
+        var dto = UnitFactory.AddUnitDto("Unit1");
 
-        var result = _sut.Add(floor1.Id, dto);
+        _sut.Add(floor1.Id, dto);
 
         var actual = ReadContext.Set<Entities.Units.Unit>().Single();
 
         actual.Should().BeEquivalentTo(UnitFactory
-            .Create(dto.Name, dto.FloorId, dto.IsActive), _ => _
-            .Excluding(_ => _.Id));
+            .Create(dto.Name, floor1.Id, dto.IsActive), o => o
+            .Excluding(u => u.Id));
     }
 
     [Theory]
@@ -60,7 +62,7 @@ public class UnitServiceTests : BusinessIntegrationTest
         var unit1 = UnitFactory.Create(unitName, floor1.Id);
         Save(unit1);
 
-        var dto = UnitFactory.AddUnitDto(unitName, true, floor1.Id);
+        var dto = UnitFactory.AddUnitDto(unitName);
 
         var actual = () => _sut.Add(floor1.Id, dto);
 
@@ -76,7 +78,7 @@ public class UnitServiceTests : BusinessIntegrationTest
     {
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
-        var floor1 = FloorFactory.Generate(block1.Id, "Floor1", 1);
+        var floor1 = FloorFactory.Generate(block1.Id, "Floor1");
         Save(floor1);
         var unit1 = UnitFactory.Create("Unit1", floor1.Id);
         Save(unit1);
@@ -142,8 +144,8 @@ public class UnitServiceTests : BusinessIntegrationTest
         var actual = ReadContext.Set<Entities.Units.Unit>().Single();
 
         actual.Should().BeEquivalentTo(UnitFactory
-            .Create(unit2.Name, unit2.FloorId, unit2.IsActive), _ => _
-            .Excluding(_ => _.Id));
+            .Create(unit2.Name, unit2.FloorId, unit2.IsActive), o => o
+            .Excluding(u => u.Id));
     }
 
     [Theory]

@@ -1,4 +1,4 @@
-﻿namespace ServiceCharge.Service.Unit.Tests.Units.FactoryBuilder;
+﻿namespace ServiceCharge.TestTools.Units;
 
 public class GetAllUnitsBuilder
 {

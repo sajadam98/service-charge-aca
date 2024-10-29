@@ -1,7 +1,7 @@
 using ServiceCharge.Persistence.Ef;
-using ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration.Fixtures;
+using ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration.Fixtures;
 
-namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration;
+namespace ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration;
 
 public class BusinessIntegrationTest : EFDataContextDatabaseFixture
 {

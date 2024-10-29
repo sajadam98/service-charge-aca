@@ -1,4 +1,7 @@
-﻿namespace ServiceCharge.Service.Unit.Tests.Blocks;
+﻿using ServiceCharge.TestTools.Blocks;
+using ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration;
+
+namespace ServiceCharge.Service.Unit.Tests.Blocks;
 
 public class BlockServiceTests : BusinessIntegrationTest
 {

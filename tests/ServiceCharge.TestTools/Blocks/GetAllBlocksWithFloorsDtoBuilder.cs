@@ -1,4 +1,4 @@
-﻿namespace ServiceCharge.Service.Unit.Tests.Blocks.FactoryBuilder;
+﻿namespace ServiceCharge.TestTools.Blocks;
 
 public class GetAllBlocksWithFloorsDtoBuilder
 {

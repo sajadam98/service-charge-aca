@@ -1,6 +1,6 @@
 using System.Transactions;
 
-namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration.Fixtures;
+namespace ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration.Fixtures;
 
 public class DatabaseFixture : IDisposable
 {

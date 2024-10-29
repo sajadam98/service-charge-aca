@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCharge.Service.Unit.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCharge.TestTools", "tests\ServiceCharge.TestTools\ServiceCharge.TestTools.csproj", "{0E3335AA-199C-4341-A1F5-C11DCB420194}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceCharge.Application.Integration.Tests", "tests\ServiceCharge.Application.Integration.Tests\ServiceCharge.Application.Integration.Tests.csproj", "{91575172-8999-45A3-8486-87FCAAE597AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{0E3335AA-199C-4341-A1F5-C11DCB420194}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E3335AA-199C-4341-A1F5-C11DCB420194}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E3335AA-199C-4341-A1F5-C11DCB420194}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91575172-8999-45A3-8486-87FCAAE597AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91575172-8999-45A3-8486-87FCAAE597AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91575172-8999-45A3-8486-87FCAAE597AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91575172-8999-45A3-8486-87FCAAE597AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F27E16F7-BD04-4668-BC57-323CA2C96F9D} = {28565DDF-9BBA-4D4B-9EBE-33ED5C315103}
@@ -79,5 +85,6 @@ Global
 		{4C8E7110-66B7-44F8-9E68-57DF3CC10028} = {28565DDF-9BBA-4D4B-9EBE-33ED5C315103}
 		{17143AF0-7C44-4847-9DA6-638FDFBBE1FC} = {2190EF7E-CE19-4AFE-B6C5-A3C8F0BC5A9A}
 		{0E3335AA-199C-4341-A1F5-C11DCB420194} = {2190EF7E-CE19-4AFE-B6C5-A3C8F0BC5A9A}
+		{91575172-8999-45A3-8486-87FCAAE597AC} = {2190EF7E-CE19-4AFE-B6C5-A3C8F0BC5A9A}
 	EndGlobalSection
 EndGlobal

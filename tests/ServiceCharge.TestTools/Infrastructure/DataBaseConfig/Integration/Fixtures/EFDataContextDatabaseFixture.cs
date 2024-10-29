@@ -1,12 +1,13 @@
 using ServiceCharge.Persistence.Ef;
+using Xunit;
 
-namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration.
+namespace ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration.
     Fixtures;
 
 [Collection(nameof(ConfigurationFixture))]
 public class EFDataContextDatabaseFixture : DatabaseFixture
 {
-    protected static EfDataContext CreateDataContext(string tenantId)
+    public static EfDataContext CreateDataContext(string tenantId)
     {
         var connectionString =
             new ConfigurationFixture().Value.ConnectionString;

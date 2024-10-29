@@ -7,8 +7,6 @@ global using ServiceCharge.Persistence.Ef.Blocks;
 global using ServiceCharge.Persistence.Ef.Floors;
 global using ServiceCharge.Persistence.Ef.UnitOfWorks;
 global using ServiceCharge.Persistence.Ef.Units;
-global using ServiceCharge.Service.Unit.Tests.Blocks.FactoryBuilder;
-global using ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration;
 global using ServiceCharge.Services;
 global using ServiceCharge.Services.Blocks;
 global using ServiceCharge.Services.Blocks.Contracts.Interfaces;

@@ -1,4 +1,4 @@
-﻿namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig;
+﻿namespace ServiceCharge.TestTools.Infrastructure.DataBaseConfig;
 
 public static class EnumerableHelper
 {
