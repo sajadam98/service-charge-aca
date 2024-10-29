@@ -22,19 +22,20 @@ public class FloorServiceTests : BusinessIntegrationTest
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
         var dto = FloorFactory.AddFloorDto("Name", 5);
-        
+
         int result = _sut.Add(block1.Id, dto);
 
         var actual = ReadContext.Set<Floor>().Single();
         actual.Should().BeEquivalentTo
-            (FloorFactory
-                .Create(dto.Name, block1.Id, dto.UnitCount), 
-                _=>_.Excluding(b=>b.Id));
+        (FloorFactory
+                .Generate(block1.Id, dto.Name, dto.UnitCount),
+            _ => _.Excluding(b => b.Id));
     }
 
     [Theory]
     [InlineData(-1)]
-    public void Add_throw_exception_when_block_not_found(int invalidBlockId)
+    public void Add_throw_exception_when_block_not_found(
+        int invalidBlockId)
     {
         var dto = FloorFactory.AddFloorDto("Name");
 
@@ -47,16 +48,17 @@ public class FloorServiceTests : BusinessIntegrationTest
 
     [Theory]
     [InlineData("Yas")]
-    public void Add_throw_exception_when_floor_name_duplicated(string floorName)
+    public void Add_throw_exception_when_floor_name_duplicated(
+        string floorName)
     {
-        var block1 = BlockFactory.Create("Block1",2);
+        var block1 = BlockFactory.Create("Block1", 2);
         Save(block1);
-        var floor1 = FloorFactory.Create(floorName,block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id, floorName);
         Save(floor1);
-        
+
         var dto = FloorFactory.AddFloorDto(floorName);
-        
-        var actual  = () => _sut.Add(block1.Id, dto);
+
+        var actual = () => _sut.Add(block1.Id, dto);
 
         actual.Should().ThrowExactly<FloorNameDuplicateException>();
         ReadContext.Set<Floor>().Should().HaveCount(1)
@@ -65,64 +67,73 @@ public class FloorServiceTests : BusinessIntegrationTest
                                     f.Name == floor1.Name &&
                                     f.BlockId == floor1.BlockId);
     }
+
     [Fact]
     public void Add_throw_exception_when_block_floors_count_is_max()
     {
-        var block1 = BlockFactory.Create("Block1",1);
+        var block1 = BlockFactory.Create("Block1", 1);
         Save(block1);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id);
         Save(floor1);
 
-        var dto = FloorFactory.AddFloorDto("Name",5);
+        var dto = FloorFactory.AddFloorDto("Name", 5);
 
         var actual = () => _sut.Add(block1.Id, dto);
 
         actual.Should().ThrowExactly<BlockHasMaxFloorsCountException>();
         ReadContext.Set<Floor>().Should().HaveCount(1)
-            .And.ContainSingle(f => f.Id == floor1.Id && f.BlockId == floor1.BlockId);
+            .And.ContainSingle(f =>
+                f.Id == floor1.Id && f.BlockId == floor1.BlockId);
     }
 
     [Theory]
     [InlineData("Yas")]
-    public void Add_add_a_floor_with_same_name_in_different_blocks_properly(string floorName)
+    public void
+        Add_add_a_floor_with_same_name_in_different_blocks_properly(
+            string floorName)
     {
-        var block1 = BlockFactory.Create("Block1",2);
+        var block1 = BlockFactory.Create("Block1", 2);
         Save(block1);
-        var block2 = BlockFactory.Create("Block2",2);
+        var block2 = BlockFactory.Create("Block2", 2);
         Save(block2);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id);
         Save(floor1);
-        
+
         var dto = FloorFactory.AddFloorDto(floorName);
-        
+
         var actual = _sut.Add(block2.Id, dto);
 
         ReadContext.Set<Floor>().Should().HaveCount(2)
-            .And.ContainSingle(f => f.Id == floor1.Id && f.BlockId == block1.Id)
-            .And.ContainSingle(f => f.Id == actual && f.BlockId == block2.Id);
+            .And.ContainSingle(f =>
+                f.Id == floor1.Id && f.BlockId == block1.Id)
+            .And.ContainSingle(f =>
+                f.Id == actual && f.BlockId == block2.Id);
     }
+
     [Fact]
     public void Update_update_a_floor_properly()
     {
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id, "Floor1");
         Save(floor1);
-        var floor2 = FloorFactory.Create("Floor2",block1.Id);
+        var floor2 = FloorFactory.Generate(block1.Id, "Floor2");
         Save(floor2);
 
         var dto = FloorFactory.UpdateFloorDto("Updated!", 8);
 
         _sut.Update(floor1.Id, dto);
 
-        var actual = ReadContext.Set<Floor>().FirstOrDefault(_ => _.Id == floor1.Id);
+        var actual = ReadContext.Set<Floor>()
+            .FirstOrDefault(_ => _.Id == floor1.Id);
 
         actual.Should().BeEquivalentTo(dto);
     }
-    
+
     [Theory]
     [InlineData(-1)]
-    public void Update_throw_exception_when_block_id_is_not_found(int invalidBlockId)
+    public void Update_throw_exception_when_block_id_is_not_found(
+        int invalidBlockId)
     {
         var dto = FloorFactory.AddFloorDto("Floor1");
 
@@ -138,41 +149,81 @@ public class FloorServiceTests : BusinessIntegrationTest
     {
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id,2);
+        var floor1 = FloorFactory.Generate(block1.Id, "Floor1", 2);
         Save(floor1);
         var unit1 = UnitFactory.Create("Unit1", floor1.Id);
         Save(unit1);
         var unit2 = UnitFactory.Create("Unit2", floor1.Id);
         Save(unit2);
 
-        var dto = FloorFactory.UpdateFloorDto("Updated!",1);
+        var dto = FloorFactory.UpdateFloorDto("Updated!");
 
         var actual = () => _sut.Update(floor1.Id, dto);
 
         actual.Should().ThrowExactly<FloorHasMaxUnitsCountException>();
     }
+
+    [Fact]
+    public void Update_throw_exception_when_name_is_duplicate()
+    {
+        var block = new BlockBuilder()
+            .Build();
+        Save(block);
+        var floor = FloorFactory.Generate(block.Id, "Floor1");
+        Save(floor);
+        var floor2 = FloorFactory.Generate(block.Id, "Floor2");
+        Save(floor2);
+
+        var dto = FloorFactory.UpdateFloorDto(floor2.Name, 60);
+
+        var actual = () => _sut.Update(floor.Id, dto);
+
+        actual.Should().ThrowExactly<FloorNameDuplicateException>();
+    }
+
+    [Fact]
+    public void Update_updates_floor_when_name_not_changed_properly()
+    {
+        var block = new BlockBuilder()
+            .Build();
+        Save(block);
+        var floor = FloorFactory.Generate(block.Id, "Floor1");
+        Save(floor);
+        var floor2 = FloorFactory.Generate(block.Id, "Floor2");
+        Save(floor2);
+
+        var dto = FloorFactory.UpdateFloorDto(floor.Name, 60);
+
+        _sut.Update(floor.Id, dto);
+
+        ReadContext.Set<Floor>().Should().ContainSingle(f =>
+            f.Id == floor.Id && f.Name == dto.Name &&
+            f.UnitCount == dto.UnitCount);
+    }
+
     [Fact]
     public void Delete_delete_a_floor_properly()
     {
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id, "Floor1");
         Save(floor1);
-        var floor2 = FloorFactory.Create("Floor2",block1.Id);
+        var floor2 = FloorFactory.Generate(block1.Id, "Floor2");
         Save(floor2);
 
         _sut.Delete(floor2.Id);
 
         var actual = ReadContext.Set<Floor>().Single();
-
         actual.Should().BeEquivalentTo(FloorFactory
-            .Create(floor1.Name,floor1.BlockId, floor1.UnitCount),_=>_
-            .Excluding(_ => _.Id));
+            .Generate(floor1.BlockId, floor1.Name, floor1.UnitCount), _ =>
+            _
+                .Excluding(_ => _.Id));
     }
 
     [Theory]
     [InlineData(-1)]
-    public void Delete_throw_exception_if_floor_not_found(int invalidFloorId)
+    public void Delete_throw_exception_if_floor_not_found(
+        int invalidFloorId)
     {
         var actual = () => _sut.Delete(invalidFloorId);
 
@@ -185,11 +236,11 @@ public class FloorServiceTests : BusinessIntegrationTest
     {
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id);
         Save(floor1);
         var unit1 = UnitFactory.Create("Unit1", floor1.Id);
         Save(unit1);
-        
+
         var actual = () => _sut.Delete(floor1.Id);
 
         actual.Should().ThrowExactly<FloorHasUnitsException>();

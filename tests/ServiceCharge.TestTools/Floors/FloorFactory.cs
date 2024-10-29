@@ -2,7 +2,8 @@
 
 public static class FloorFactory
 {
-    public static Floor Create(string name = "floor", int blockId = 0,int unitCount = 1)
+    public static Floor Generate(int blockId, string name = "floor",
+        int unitCount = 1)
     {
         return new Floor
         {
@@ -11,8 +12,9 @@ public static class FloorFactory
             BlockId = blockId
         };
     }
-    
-    public static GetAllFloorsDto GetAll(int id, int blockid, string name = "Floor", int unitCount = 1)
+
+    public static GetAllFloorsDto GetAll(int id, int blockid,
+        string name = "Floor", int unitCount = 1)
     {
         return new GetAllFloorsDto()
         {
@@ -23,7 +25,8 @@ public static class FloorFactory
         };
     }
 
-    public static AddFloorDto AddFloorDto(string name = "Floor",int unitCount = 1)
+    public static AddFloorDto AddFloorDto(string name = "Floor",
+        int unitCount = 1)
     {
         return new AddFloorDto()
         {
@@ -31,10 +34,10 @@ public static class FloorFactory
             UnitCount = unitCount
         };
     }
-    
-    
-    
-    public static UpdateFloorDto UpdateFloorDto(string name = "Floor", int unitCount = 1)
+
+
+    public static UpdateFloorDto UpdateFloorDto(string name = "Floor",
+        int unitCount = 1)
     {
         return new UpdateFloorDto
         {

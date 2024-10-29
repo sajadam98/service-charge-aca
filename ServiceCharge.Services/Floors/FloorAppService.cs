@@ -10,10 +10,10 @@ public class FloorAppService(
         var isDuplicate = floorRepository.IsDuplicate(dto.Name);
         if (isDuplicate)
             throw new FloorNameDuplicateException();
-        
+
         var block = blockRepository.FindById(id)
                     ?? throw new BlockNotFoundException();
-        
+
         if (block.FloorCapacity <= block.FloorCount)
             throw new BlockHasMaxFloorsCountException();
 
@@ -27,14 +27,17 @@ public class FloorAppService(
         unitOfWork.Save();
         return floor.Id;
     }
+
     public void Update(int floorId, UpdateFloorDto dto)
     {
-        var isDuplicate = floorRepository.IsDuplicate(dto.Name);
-        if (isDuplicate)
-            throw new FloorNameDuplicateException();
-        
         var floor = floorRepository.Find(floorId)
                     ?? throw new FloorNotFoundException();
+        if (floor.Name != dto.Name)
+        {
+            var isDuplicate = floorRepository.IsDuplicate(dto.Name);
+            if (isDuplicate)
+                throw new FloorNameDuplicateException();
+        }
 
         if (dto.UnitCount < floorRepository.UnitsCount(floorId))
             throw new FloorHasMaxUnitsCountException();
@@ -49,12 +52,12 @@ public class FloorAppService(
     {
         var floor = floorRepository.Find(id)
                     ?? throw new FloorNotFoundException();
-        
+
         var block = blockRepository.Find(floor.BlockId);
-        
+
         if (floorRepository.UnitsCount(id) > 0)
             throw new FloorHasUnitsException();
-        
+
         floorRepository.Remove(floor);
         unitOfWork.Save();
     }

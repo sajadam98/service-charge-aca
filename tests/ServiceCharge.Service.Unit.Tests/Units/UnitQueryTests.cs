@@ -16,9 +16,9 @@ public class UnitQueryTests : BusinessIntegrationTest
     public void GetById_get_a_unit_properly()
     {
         var block1 = BlockFactory.Create("Block1",2);
-        var floor1 = FloorFactory.Create("Floor1",unitCount:5);
+        var floor1 = FloorFactory.Generate(block1.Id,"Floor1",unitCount:5);
         block1.Floors.Add(floor1);
-        var floor2 = FloorFactory.Create("Floor2",unitCount:7);
+        var floor2 = FloorFactory.Generate(block1.Id,"Floor2",unitCount:7);
         block1.Floors.Add(floor2);
         Save(block1);
         var unit1 = UnitFactory.Create("Unit1",floor1.Id);
@@ -40,13 +40,13 @@ public class UnitQueryTests : BusinessIntegrationTest
     {
         var block1 = BlockFactory.Create("Block1");
         Save(block1);
-        var floor1 = FloorFactory.Create("Floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id,"Floor1",block1.Id);
         Save(floor1);
         var unit1 = UnitFactory.Create("Unit1", floor1.Id);
         Save(unit1);
         var unit2 = UnitFactory.Create("Unit2", floor1.Id);
         Save(unit2);
-        var floor2 = FloorFactory.Create("Floor2",block1.Id);
+        var floor2 = FloorFactory.Generate(block1.Id,"Floor2",block1.Id);
         Save(floor2);
         var unit3 = UnitFactory.Create("Unit3", floor2.Id);
         Save(unit3);
