@@ -12,12 +12,7 @@ public static class FloorServiceFactory
     public static FloorService CreateService(EfDataContext context, FloorRepository? repository = null)
     {
         repository ??= new EFFloorRepository(context);
-        /*
-         * if(repository == null)
-         * {
-         *  repository = new EFFloorRepository(context);
-         * }
-         */
+        
         var blockRepository = new EFBlockRepository(context);
         var unitOfWork = new EfUnitOfWork(context);
         return new FloorAppService(

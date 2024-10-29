@@ -9,7 +9,7 @@ using AddFloorDto =
 namespace ServiceCharge.Services.Floors;
 
 public class FloorAppService(
-    FloorRepository repository,
+    FloorRepository floorRepository,
     BlockRepository blockRepository,
     UnitOfWork unitOfWork)
     : FloorService
@@ -28,7 +28,7 @@ public class FloorAppService(
         }
 
         var isFloorExistWithSameName =
-            repository.IsFloorExistWithSameName(dto.Name, blockId);
+            floorRepository.IsFloorExistWithSameName(dto.Name, blockId);
         if (isFloorExistWithSameName)
         {
             throw new DuplicateFloorNameException();
@@ -40,8 +40,50 @@ public class FloorAppService(
             UnitCount = dto.UnitCount,
             BlockId = blockId
         };
-        repository.Add(floor);
+        floorRepository.Add(floor);
         unitOfWork.Save();
         return floor.Id;
+    }
+
+    public void Update(int floorId, UpdateFloorDto dto)
+    {
+        var floorDto = floorRepository.FindByIdWithExistingUnitsCount(floorId);
+
+        if (floorDto is null)
+            throw new FloorNotFoundException();
+
+        if (floorDto.Floor!.Name != dto.Name)
+        {
+            var isFloorExistWithSameName =
+                floorRepository.IsFloorExistWithSameName(dto.Name,
+                    floorDto.Floor!.BlockId);
+            if (isFloorExistWithSameName)
+            {
+                throw new DuplicateFloorNameException();
+            }
+        }
+
+        if (floorDto.ExistingUnitsCount > dto.UnitCount)
+            throw new FloorUnitsCountException();
+
+        floorDto.Floor!.UnitCount = dto.UnitCount;
+        floorDto.Floor!.Name = dto.Name;
+
+        floorRepository.Update(floorDto.Floor!);
+        unitOfWork.Save();
+    }
+
+    public void Delete(int floorId)
+    {
+        var floorDto = floorRepository.FindByIdWithExistingUnitsCount(floorId);
+
+        if (floorDto is null)
+            throw new FloorNotFoundException();
+
+        if (floorDto.ExistingUnitsCount > 0)
+            throw new FloorUnitsCountException();
+
+        floorRepository.Delete(floorDto.Floor);
+        unitOfWork.Save();
     }
 }

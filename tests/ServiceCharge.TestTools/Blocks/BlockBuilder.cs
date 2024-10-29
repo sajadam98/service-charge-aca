@@ -8,12 +8,18 @@ public class BlockBuilder
     {
         Name = "Dummy_Block_Name",
         CreationDate = DateTime.UtcNow,
-        FloorCount = 0
+        FloorCount = 1
     };
 
     public BlockBuilder WithFloorCount(int value)
     {
         _block.FloorCount = value;
+        return this;
+    }
+
+    public BlockBuilder WithName(string name)
+    {
+        _block.Name = name;
         return this;
     }
 
