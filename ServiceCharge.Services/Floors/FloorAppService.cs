@@ -1,6 +1,9 @@
-﻿using ServiceCharge.Entities;
+﻿using System.Data;
+using System.Security.AccessControl;
+using ServiceCharge.Entities;
 using ServiceCharge.Services.Blocks.Exceptions;
 using ServiceCharge.Services.Floors.Contracts;
+using ServiceCharge.Services.Floors.Contracts.Dto;
 using ServiceCharge.Services.Floors.Exceptions;
 using ServiceCharge.Services.UnitOfWorks;
 using AddFloorDto =
@@ -43,5 +46,42 @@ public class FloorAppService(
         repository.Add(floor);
         unitOfWork.Save();
         return floor.Id;
+    }
+
+    public void Update(int floorId, UpdateFloorDto dto)
+    {
+        var floor = repository.FindById(floorId);
+        if (floor == null)
+        {
+            throw new FloorNotFoundException();
+        }
+
+        if (IsDuplicateName(floorId,dto.Name, floor.BlockId))
+        {
+            throw new DuplicateFloorNameException();
+        }
+        floor.Name = dto.Name;
+        floor.UnitCount = dto.UnitCount;
+        
+        unitOfWork.Save();
+    }
+
+    public void Delete(int floorId)
+    {
+        var floor = repository.FindById(floorId);
+        if (floor == null)
+        {
+            throw new FloorNotFoundException();
+        }
+        repository.Delete(floor);
+        
+        unitOfWork.Save();
+    }
+
+    private bool IsDuplicateName(int floorId, string dtoName, int blockId)
+    {
+        if (repository.IsFloorExistWithSameNameButNotPreviousName(dtoName, floorId, blockId))
+            return true;
+        return false;
     }
 }

@@ -9,6 +9,7 @@ using ServiceCharge.Services.Floors.Contracts.Dto;
 using ServiceCharge.Services.Floors.Exceptions;
 using ServiceCharge.TestTools.Blocks;
 using ServiceCharge.TestTools.Floors;
+using ServiceCharge.TestTools.Floors.DTOs;
 
 namespace ServiceCharge.Service.Unit.Tests.Floors;
 
@@ -28,12 +29,9 @@ public class FloorServiceTests : BusinessIntegrationTest
             .WithFloorCount(1)
             .Build();
         Save(block);
-        var dto = new AddFloorDto
-        {
-            UnitCount = 3,
-            Name = "Dummy_Name"
-        };
-
+        var dto = FloorDtoFactory.AddFloorDto(3);
+        
+        
         var actual = _sut.Add(block.Id, dto);
 
         var expected =
@@ -45,13 +43,9 @@ public class FloorServiceTests : BusinessIntegrationTest
 
     [Theory]
     [InlineData(-1)]
-    public void Add_throw_exception_when_block_not_exist_exception(
-        int invalidBlockId)
+    public void Add_throw_exception_when_block_not_exist_exception(int invalidBlockId)
     {
-        var dto = new AddFloorDto
-        {
-            Name = "Dummy_Name"
-        };
+        var dto = FloorDtoFactory.AddFloorDto(1);
 
         var actual = () => _sut.Add(invalidBlockId, dto);
 
@@ -62,28 +56,15 @@ public class FloorServiceTests : BusinessIntegrationTest
     [Theory]
     [InlineData("Yas")]
     public void
-        Add_throw_exception_when_floor_does_exist_in_same_block_with_given_name(
-            string name)
+        Add_throw_exception_when_floor_does_exist_in_same_block_with_given_name(string name)
     {
-        var block = new Block
-        {
-            Name = "Dummy_Block_Name",
-            CreationDate = DateTime.Now,
-            FloorCount = 2
-        };
+        var blockBuilder = new BlockBuilder();
+        var block = blockBuilder.WithFloorCount(2).Build();
         Save(block);
-        var floor = new Floor
-        {
-            Name = name,
-            BlockId = block.Id,
-            UnitCount = 3
-        };
+        var floor = FloorFactory.Create( block.Id, name, 3);
         Save(floor);
-        var dto = new AddFloorDto
-        {
-            Name = name,
-            UnitCount = 3
-        };
+        var dto = FloorDtoFactory.AddFloorDto(3, name);
+           
 
         var actual = () => _sut.Add(block.Id, dto);
 
@@ -97,36 +78,19 @@ public class FloorServiceTests : BusinessIntegrationTest
 
     [Theory]
     [InlineData("Yas")]
-    public void Add_adds_floor_with_same_name_in_different_blocks_properly(
-        string floorName)
+    public void Add_adds_floor_with_same_name_in_different_blocks_properly(string floorName)
     {
-        var block1 = new Block
-        {
-            Name = "Dummy_Block_Name",
-            CreationDate = DateTime.Now,
-            FloorCount = 2
-        };
+        var blockBuilder1 = new BlockBuilder();
+        var block1 = blockBuilder1.WithFloorCount(2).WithName("Block1").Build();
         Save(block1);
-        var block2 = new Block
-        {
-            Name = "Dummy_Block_Name",
-            CreationDate = DateTime.Now,
-            FloorCount = 2
-        };
+        var blockBuilder2 = new BlockBuilder();
+        var block2 = blockBuilder2.WithFloorCount(2).WithName("Block2").Build();
         Save(block2);
-        var floor = new Floor
-        {
-            Name = floorName,
-            UnitCount = 1,
-            BlockId = block1.Id
-        };
+        var floor = FloorFactory.Create( block1.Id, floorName, 1);
         Save(floor);
-        var dto = new AddFloorDto
-        {
-            Name = floorName,
-            UnitCount = 1,
-        };
-
+        var dto = FloorDtoFactory.AddFloorDto(1, floorName);
+           
+        
         var actual = _sut.Add(block2.Id, dto);
 
         ReadContext.Set<Floor>().Should().HaveCount(2)
@@ -139,25 +103,12 @@ public class FloorServiceTests : BusinessIntegrationTest
     [Fact]
     public void Add_throw_exception_when_blocks_floor_capacity_fulled()
     {
-        var block = new Block
-        {
-            Name = "Dummy_Block_Name",
-            CreationDate = DateTime.Now,
-            FloorCount = 1,
-        };
+        var blockBuilder = new BlockBuilder();
+        var block = blockBuilder.WithFloorCount(1).Build();
         Save(block);
-        var floor = new Floor
-        {
-            Name = "Dummy_Floor_Name",
-            UnitCount = 1,
-            BlockId = block.Id
-        };
+        var floor = FloorFactory.Create( block.Id, unitCount:2);
         Save(floor);
-        var dto = new AddFloorDto
-        {
-            Name = "Dummy_Floor_Name_2",
-            UnitCount = 1
-        };
+        var dto = FloorDtoFactory.AddFloorDto(1, "floor2");
 
         var actual = () => _sut.Add(block.Id, dto);
 
@@ -165,5 +116,77 @@ public class FloorServiceTests : BusinessIntegrationTest
         ReadContext.Set<Floor>().Should().HaveCount(1)
             .And.ContainSingle(f =>
                 f.Id == floor.Id && f.BlockId == floor.BlockId);
+    }
+
+    [Fact]
+    public void Update_update_floor_properly()
+    {
+        var blockBuilder = new BlockBuilder();
+        var block = blockBuilder.WithFloorCount(2).Build();
+        Save(block);
+        var floor = FloorFactory.Create( block.Id, unitCount:2);
+        Save(floor);
+        var dto = FloorDtoFactory.UpdateFloorDto("floor1", 2);
+
+        _sut.Update(floor.Id, dto);
+
+        ReadContext.Set<Floor>().Single(_ => _.Id == floor.Id).Should().NotBeNull()
+            .And.BeEquivalentTo(dto);
+    }
+
+
+    [Theory]
+    [InlineData(-1)]
+    public void Update_throw_exception_when_floor_not_exist_exception(int invalidFloorId)
+    {
+        var dto = FloorDtoFactory.UpdateFloorDto("name", 1);
+
+        var actual = () => _sut.Update(invalidFloorId, dto);
+
+        actual.Should().ThrowExactly<FloorNotFoundException>();
+        
+    }
+
+    [Theory]
+    [InlineData("floor1")]
+    public void Update_throw_exception_when_floor_name_is_duplicated(string invalidFloorName)
+    {
+        var blockBuilder = new BlockBuilder();
+        var block = blockBuilder.WithFloorCount(2).Build();
+        Save(block);
+        var floor = FloorFactory.Create( block.Id,invalidFloorName,  2);
+        Save(floor);
+        var floor2 = FloorFactory.Create(block.Id, unitCount: 2);
+        Save(floor2);
+        var dto = FloorDtoFactory.UpdateFloorDto(invalidFloorName, 1);
+        
+        var actual = () => _sut.Update(floor2.Id, dto);
+
+        actual.Should().ThrowExactly<DuplicateFloorNameException>();
+        ReadContext.Set<Floor>().Single(_ => _.Id == floor2.Id).Name.Should().Be(invalidFloorName);
+    }
+
+    [Fact]
+    public void Delete_delete_floor_properly()
+    {
+        var blockBuilder = new BlockBuilder();
+        var block = blockBuilder.WithFloorCount(2).Build();
+        Save(block);
+        var floor = FloorFactory.Create( block.Id, unitCount: 2);
+        Save(floor);
+        
+        _sut.Delete(floor.Id);
+
+        ReadContext.Set<Floor>().Should().HaveCount(0);
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    public void Delete_throw_exception_when_floor_not_exist_exception(int invalidFloorId)
+    {
+        
+        var actual = () => _sut.Delete(invalidFloorId);
+
+        actual.Should().ThrowExactly<FloorNotFoundException>();
     }
 }

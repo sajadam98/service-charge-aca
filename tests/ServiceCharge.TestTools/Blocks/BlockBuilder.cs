@@ -17,6 +17,13 @@ public class BlockBuilder
         return this;
     }
 
+    public BlockBuilder WithName(string name)
+    {
+        _block.Name = name;
+        return this;
+    }
+    
+    
     public Block Build()
     {
         return _block;

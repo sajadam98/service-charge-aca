@@ -9,7 +9,8 @@ namespace ServiceCharge.TestTools.Floors;
 
 public static class FloorServiceFactory
 {
-    public static FloorService CreateService(EfDataContext context, FloorRepository? repository = null)
+    public static FloorService CreateService(EfDataContext context, FloorRepository? repository 
+        = null)
     {
         repository ??= new EFFloorRepository(context);
         /*
@@ -26,3 +27,4 @@ public static class FloorServiceFactory
             unitOfWork);
     }
 }
+
