@@ -5,14 +5,16 @@ public class BlockServiceTests : BusinessIntegrationTest
 {
     private readonly BlockService _sut;
     private readonly Mock<DateTimeService> _dateTimeServiceMock;
+    private readonly DateTime _defaultdate;
 
     public BlockServiceTests()
     {
+        _defaultdate = new DateTime(2020, 1, 1);
         var repository = new EFBlockRepository(Context);
         _dateTimeServiceMock = new Mock<DateTimeService>();
 
         _dateTimeServiceMock.Setup(_ => _.NowUtc)
-            .Returns(new DateTime(2020, 1, 1));
+            .Returns(_defaultdate);
 
         var unitOfWork = new EfUnitOfWork(Context);
 
@@ -38,7 +40,7 @@ public class BlockServiceTests : BusinessIntegrationTest
         {
             Name = dto.Name,
             FloorCount = dto.FloorCount,
-            CreationDate = new DateTime(2020, 1, 1),
+            CreationDate = _defaultdate,
             Floors = []
         }, _ => _.Excluding(a => a.Id));
     }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ServiceCharge.Entities")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d3da347e3ac1e5ec12797fcd5939e2a70ff20ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8566767dea4afeed8f43f566aded602873370308")]
 [assembly: System.Reflection.AssemblyProductAttribute("ServiceCharge.Entities")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ServiceCharge.Entities")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

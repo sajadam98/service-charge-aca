@@ -11,7 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Units\Contracts\Dtos\" />
       <Folder Include="Units\Exceptions\" />
     </ItemGroup>
 

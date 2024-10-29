@@ -1,4 +1,6 @@
-﻿using ServiceCharge.Persistence.Ef;
+﻿using Microsoft.AspNetCore.Authentication;
+using ServiceCharge.Persistence.Ef;
+using ServiceCharge.Service.Unit.Tests.Floors;
 using ServiceCharge.Services.Floors.Contracts.Dtos;
 
 namespace ServiceCharge.Service.Unit.Tests.Blocks;
@@ -15,12 +17,7 @@ public class BlockQueryTests : BusinessIntegrationTest
     [Fact]
     public void GetAll_get_all_blocks_properly()
     {
-        var block = new Block()
-        {
-            Name = "name1",
-            CreationDate = new DateTime(2024, 11, 12),
-            FloorCount = 4
-        };
+        var block = BlockFactory.Create();
         Save(block);
         var block2 = new Block()
         {
@@ -112,5 +109,34 @@ public class BlockQueryTests : BusinessIntegrationTest
             UnitCount = block1.Floors.First().UnitCount,
             BlockId = block1.Floors.First().BlockId,
         });
+    }
+
+    [Fact]
+    public void
+        GetAllWithAddedFloorCount_get_all_with_added_floor_count_properly()
+    {
+        var block1 = BlockFactory.Create();
+        Save(block1);
+        var block2 = BlockFactory.Create(name: "name2");
+        Save(block2);
+        var block3 = BlockFactory.Create(name: "name3");
+        Save(block3);
+        var floor1 = FloorFactory.Crerate(blockId: block1.Id, name: "name1");
+        Save(floor1);
+        var floor2 = FloorFactory.Crerate(blockId: block2.Id, name: "name2");
+        Save(floor2);
+        var floor3 = FloorFactory.Crerate(blockId: block2.Id, name: "name3");
+        Save(floor3);
+        var floor4 = FloorFactory.Crerate(blockId: block2.Id, name: "name4");
+        Save(floor4);
+
+        var result = _sut.GetAllWithAddedFloorCount();
+
+        var actual = ReadContext.Set<Block>()
+            .Include(_ => _.Floors);
+
+        result.First().AddedFloorCount.Should().Be(1);
+        result.ToList()[1].AddedFloorCount.Should().Be(block2.Floors.Count );
+        result.ToList()[2].AddedFloorCount.Should().Be(0);
     }
 }

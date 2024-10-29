@@ -18,13 +18,13 @@ public class EfBlockQuery : BlockQuery
     {
         return _context.Set<Block>()
             .Select(_ =>
-            new GetBlockDto()
-            {
-                Id = _.Id,
-                Name = _.Name,
-                CreationDate = _.CreationDate,
-                FloorCount = _.FloorCount,
-            }).ToHashSet();
+                new GetBlockDto()
+                {
+                    Id = _.Id,
+                    Name = _.Name,
+                    CreationDate = _.CreationDate,
+                    FloorCount = _.FloorCount,
+                }).ToHashSet();
     }
 
     public HashSet<GetBlockWithFloorsDto> GetAllWithFloors()
@@ -33,17 +33,30 @@ public class EfBlockQuery : BlockQuery
             .Include(_ => _.Floors)
             .Select(_ => new GetBlockWithFloorsDto()
             {
-                Id=_.Id,
-                Name=_.Name,
+                Id = _.Id,
+                Name = _.Name,
                 CreationDate = _.CreationDate,
                 FloorCount = _.FloorCount,
-                Floors = _.Floors.Select(_=>new GetFloorDto()
+                Floors = _.Floors.Select(_ => new GetFloorDto()
                 {
                     Id = _.Id,
                     Name = _.Name,
                     UnitCount = _.UnitCount,
                     BlockId = _.BlockId,
                 }).ToHashSet()
+            });
+        return query.ToHashSet();
+    }
+
+    public HashSet<GetAllWithAddedFloorCountDto> GetAllWithAddedFloorCount()
+    {
+        var query = _context.Set<Block>()
+            .Select(_ => new GetAllWithAddedFloorCountDto()
+            {
+                Id = _.Id,
+                Name = _.Name,
+                FloorCount = _.FloorCount,
+                AddedFloorCount = _.Floors.Count
             });
         return query.ToHashSet();
     }

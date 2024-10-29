@@ -2,5 +2,5 @@
 
 public interface UnitQuery
 {
-    
+    HashSet<GetAllUnitsWithFloorAndBlockNameDto> GetAllUnitsWithFloorAndBlockName();
 }
