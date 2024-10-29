@@ -1,7 +1,8 @@
 using ServiceCharge.Persistence.Ef;
-using ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration.Fixtures;
+using ServiceCharge.Service.Unitt.Tests.Infrastructure.DataBaseConfig.Integration.Fixtures;
+using ServiceCharge.Service.Unitt.Tests.Infrastructure.DataBaseConfig.Integration.Fixtures;
 
-namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration;
+namespace ServiceCharge.Service.Unitt.Tests.Infrastructure.DataBaseConfig.Integration;
 
 public class BusinessIntegrationTest : EFDataContextDatabaseFixture
 {
@@ -9,7 +10,7 @@ public class BusinessIntegrationTest : EFDataContextDatabaseFixture
     protected EfDataContext SetupContext { get; init; }
     protected EfDataContext ReadContext { get; init; }
     protected string TenantId { get; } = "Tenant_Id";
-    
+
     protected BusinessIntegrationTest(string? tenantId = null)
     {
         if (tenantId != null)
@@ -27,7 +28,7 @@ public class BusinessIntegrationTest : EFDataContextDatabaseFixture
         Context.Manipulate(_ => _.Add(entity));
     }
 
-    protected void Save<T>(params T[] entities) 
+    protected void Save<T>(params T[] entities)
         where T : class
     {
         foreach (var entity in entities)

@@ -9,5 +9,21 @@ public class FloorEntityMap : IEntityTypeConfiguration<Floor>
     public void Configure(EntityTypeBuilder<Floor> builder)
     {
         builder.ToTable("Floors");
+
+        builder.HasKey(_ => _.Id);
+        builder.Property(_ => _.Id)
+            .UseIdentityColumn();
+        builder
+            .Property(_ => _.Name)
+            .IsRequired();
+
+
+
+        builder.Property(_ => _.UnitCount)
+           .IsRequired();
+        builder.HasOne(_ => _.Block)
+            .WithMany(_ => _.Floors)
+            .HasForeignKey(_ => _.BlockId);
+
     }
 }

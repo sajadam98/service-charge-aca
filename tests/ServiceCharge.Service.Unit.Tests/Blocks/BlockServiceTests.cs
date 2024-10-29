@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using ServiceCharge.Entities;
 using ServiceCharge.Persistence.Ef.UnitOfWorks;
+using ServiceCharge.Service.Unitt.Tests.Infrastructure.DataBaseConfig.Integration;
 using ServiceCharge.Services;
 using ServiceCharge.Services.Blocks.Contracts.DTOs;
 using ServiceCharge.Services.Blocks.Exceptions;
 
-namespace ServiceCharge.Service.Unit.Tests.Blocks;
+namespace ServiceCharge.Service.Unitt.Tests.Blocks;
 
 public class BlockServiceTests : BusinessIntegrationTest
 {

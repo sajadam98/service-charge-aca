@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig;
+namespace ServiceCharge.Service.Unitt.Tests.Infrastructure.DataBaseConfig;
 
 public static class DbContextHelper
 {
@@ -12,7 +12,7 @@ public static class DbContextHelper
         manipulate(dbContext);
         dbContext.SaveChanges();
     }
-    
+
     public static void Save<TDbContext, TEntity>(
         this TDbContext dbContext,
         TEntity entity)

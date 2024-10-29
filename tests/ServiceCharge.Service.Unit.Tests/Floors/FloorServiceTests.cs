@@ -2,6 +2,7 @@
 using ServiceCharge.Entities;
 using ServiceCharge.Persistence.Ef.Floors;
 using ServiceCharge.Persistence.Ef.UnitOfWorks;
+using ServiceCharge.Service.Unitt.Tests.Infrastructure.DataBaseConfig.Integration;
 using ServiceCharge.Services.Blocks.Exceptions;
 using ServiceCharge.Services.Floors;
 using ServiceCharge.Services.Floors.Contracts;
@@ -10,7 +11,7 @@ using ServiceCharge.Services.Floors.Exceptions;
 using ServiceCharge.TestTools.Blocks;
 using ServiceCharge.TestTools.Floors;
 
-namespace ServiceCharge.Service.Unit.Tests.Floors;
+namespace ServiceCharge.Service.Unitt.Tests.Floors;
 
 public class FloorServiceTests : BusinessIntegrationTest
 {
@@ -166,4 +167,44 @@ public class FloorServiceTests : BusinessIntegrationTest
             .And.ContainSingle(f =>
                 f.Id == floor.Id && f.BlockId == floor.BlockId);
     }
+    [Fact]
+    public void Update_Update_a_floor_properly()
+    {
+        var block = new BlockBuilder().Build();
+        Save(block);
+        var floor = new FloorBuilder().WithBlockId(block.Id).Build();
+        Save(floor);
+
+        var dto = new UpdateUnitDto()
+        {
+            Name = "f2",
+            UnitCount = 5
+
+
+        };
+
+        _sut.Update(floor.Id, dto);
+
+        var expected = ReadContext.Set<Floor>().Single();
+
+        expected.Name.Should().Be(dto.Name);
+        expected.UnitCount.Should().Be(dto.UnitCount);
+
+    }
+    public void Delete_delete_a_floor_properly()
+    {
+        var block = new BlockBuilder().Build();
+        Save(block);
+        var floor = new FloorBuilder().WithBlockId(block.Id).Build();
+        Save(floor);
+        var floor2 = new FloorBuilder().WithBlockId(block.Id).Build();
+        Save(floor2);
+
+        _sut.Delete(floor.Id);
+
+        ReadContext.Set<Floor>().Where(_ => _.BlockId == block.Id).Should().HaveCount(1);
+    }
+
+
+
 }
