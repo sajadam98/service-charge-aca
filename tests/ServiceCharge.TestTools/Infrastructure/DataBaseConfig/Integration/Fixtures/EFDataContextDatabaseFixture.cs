@@ -1,4 +1,5 @@
 using ServiceCharge.Persistence.Ef;
+using Xunit;
 
 namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration.
     Fixtures;

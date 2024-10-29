@@ -6,13 +6,13 @@ namespace Library.Migration;
 
 internal class Program
 {
-    private static readonly string _dbName = "BlocksDb";
+    private static readonly string _dbName = "Test_ServiceCharge";
 
     private static readonly string _connectionStringWithoutDatabase =
-        "server=.;Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;";
+        "server=Cloud4;User Id=CLOUD4;Password=21102110;TrustServerCertificate=true;";
 
     private static readonly string _connectionString =
-        $"server=.;database={_dbName};Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;";
+        $"server=Cloud4;database={_dbName};User Id=CLOUD4;Password=21102110;TrustServerCertificate=true;";
 
     private static void EnsureDatabaseExists(string dbName,
         string connectionString)

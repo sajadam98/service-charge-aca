@@ -1,0 +1,5 @@
+﻿{
+  "PersistenceConfig": {
+    "ConnectionString": "Data Source=Cloud4;Initial Catalog=Test_ServiceCharge;User Id=CLOUD4;Password=21102110;TrustServerCertificate=true"
+  }
+}

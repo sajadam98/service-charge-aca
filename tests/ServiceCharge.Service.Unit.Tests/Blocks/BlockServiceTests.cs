@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using ServiceCharge.Entities;
-using ServiceCharge.Persistence.Ef.UnitOfWorks;
-using ServiceCharge.Services;
-using ServiceCharge.Services.Blocks.Contracts.DTOs;
-using ServiceCharge.Services.Blocks.Exceptions;
-
-namespace ServiceCharge.Service.Unit.Tests.Blocks;
+﻿namespace ServiceCharge.Service.Unit.Tests.Blocks;
 
 public class BlockServiceTests : BusinessIntegrationTest
 {

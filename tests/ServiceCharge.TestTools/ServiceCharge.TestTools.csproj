@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+        <ProjectReference Include="..\..\ServiceCharge.Entities\ServiceCharge.Entities.csproj"/>
+        <ProjectReference Include="..\..\ServiceCharge.Persistence.Ef\ServiceCharge.Persistence.Ef.csproj"/>
+        <ProjectReference Include="..\..\ServiceCharge.Services\ServiceCharge.Services.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="xunit.extensibility.core" Version="2.5.3"/>
+    </ItemGroup>
+
+</Project>

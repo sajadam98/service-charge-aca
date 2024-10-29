@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using Xunit;
 
 namespace ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration.Fixtures;
 
