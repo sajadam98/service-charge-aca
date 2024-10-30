@@ -24,4 +24,9 @@ public class UnitAppService(
         
         return unit.Id;
     }
+
+    public void AddRange(int floorId, List<AddUnitDto> unitDtos)
+    {
+        throw new NotImplementedException();
+    }
 }
