@@ -39,7 +39,7 @@ public class FloorAppService(
         return floor.Id;
     }
 
-    public void Update(PutFloorDto dto)
+    public void Update(UpdateFloorDto dto)
     {
         var floor = repository.FindById(dto.Id);
         if (floor is null)

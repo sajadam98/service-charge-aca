@@ -179,7 +179,7 @@ public class FloorServiceTests : BusinessIntegrationTest
         Save(floor);
         var floor2 = FloorFactory.Create(blockId: block.Id, name: "floor2");
         Save(floor2);
-        var dto = new PutFloorDto()
+        var dto = new UpdateFloorDto()
         {
             Id = floor.Id,
             Name = newName,
@@ -215,7 +215,7 @@ public class FloorServiceTests : BusinessIntegrationTest
         Save(floor);
         var floor2 = FloorFactory.Create(blockId: block2.Id, name: sameName);
         Save(floor2);
-        var dto = new PutFloorDto()
+        var dto = new UpdateFloorDto()
         {
             Id = floor.Id,
             Name = sameName,
@@ -238,7 +238,7 @@ public class FloorServiceTests : BusinessIntegrationTest
     [InlineData(2)]
     public void Update_throw_exception_when_floor_not_found(int faKeId)
     {
-        var dto = new PutFloorDto()
+        var dto = new UpdateFloorDto()
         {
             Id = faKeId,
             Name = "dummy_floor_name",
@@ -263,7 +263,7 @@ public class FloorServiceTests : BusinessIntegrationTest
         Save(floor);
         var floor2 = FloorFactory.Create(blockId: block.Id, name: sameName);
         Save(floor2);
-        var dto = new PutFloorDto()
+        var dto = new UpdateFloorDto()
         {
             Id = floor.Id,
             Name = sameName,
@@ -292,7 +292,7 @@ public class FloorServiceTests : BusinessIntegrationTest
             Save(unit);
         }
 
-        var dto = new PutFloorDto()
+        var dto = new UpdateFloorDto()
         {
             Id = floor.Id,
             Name = floor.Name,

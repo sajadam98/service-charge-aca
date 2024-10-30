@@ -29,4 +29,9 @@ public class UnitAppService(
     {
         throw new NotImplementedException();
     }
+
+    public void UpdateRange(int floorId, List<UpdateUnitDto> unitDtos)
+    {
+        throw new NotImplementedException();
+    }
 }

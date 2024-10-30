@@ -1,13 +1,6 @@
-﻿using Moq;
-using ServiceCharge.Application.Floors.Handler.AddFloorWithUnits;
+﻿using ServiceCharge.Application.Floors.Handler.AddFloorWithUnits;
 using ServiceCharge.Application.Floors.Handler.AddFloorWithUnits.Contracts;
-using ServiceCharge.Persistence.Ef.UnitOfWorks;
-using
-    ServiceCharge.Service.Unit.Tests.Infrastructure.DataBaseConfig.Integration;
-using ServiceCharge.Services.Floors.Contracts;
 using ServiceCharge.Services.Floors.Contracts.Dto;
-using ServiceCharge.Services.Unit;
-using ServiceCharge.TestTools.Blocks;
 
 namespace ServiceCharge.Application.Integration.Teste.FloorHandlers;
 
