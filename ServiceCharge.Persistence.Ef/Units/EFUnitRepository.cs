@@ -31,4 +31,9 @@ public class EFUnitRepository(EfDataContext context) : UnitRepository
     {
         context.Set<Unit>().AddRange(units);
     }
+
+    public HashSet<Unit> GetAllByFloorId(int floorId)
+    {
+        return context.Set<Unit>().Where(u => u.FloorId == floorId).ToHashSet();
+    }
 }

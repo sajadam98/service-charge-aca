@@ -28,7 +28,7 @@ public class FloorAppService(
         return floor.Id;
     }
 
-    public void Update(int floorId, UpdateFloorDto dto)
+    public void Update(int floorId,int blockId, UpdateFloorDto dto)
     {
         var floor = floorRepository.Find(floorId)
                     ?? throw new FloorNotFoundException();
@@ -41,7 +41,7 @@ public class FloorAppService(
 
         if (dto.UnitCount < floorRepository.UnitsCount(floorId))
             throw new FloorHasMaxUnitsCountException();
-
+        floor.BlockId = blockId;
         floor.Name = dto.Name;
         floor.UnitCount = dto.UnitCount;
         floorRepository.Update(floor);

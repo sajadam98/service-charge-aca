@@ -10,4 +10,10 @@
       <ProjectReference Include="..\ServiceCharge.Services\ServiceCharge.Services.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Floors\Handlers\AddFloors\Contracts\Exceptions\" />
+      <Folder Include="Floors\Handlers\DeleteFloors\Contracts\DTOs\" />
+      <Folder Include="Floors\Handlers\UpdateFloors\Contracts\Exceptions\" />
+    </ItemGroup>
+
 </Project>

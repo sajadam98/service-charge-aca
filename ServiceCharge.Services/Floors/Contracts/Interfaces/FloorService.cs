@@ -3,6 +3,6 @@
 public interface FloorService
 {
     int Add(int id, AddFloorDto dto);
-    void Update(int floorId, UpdateFloorDto dto);
+    void Update(int floorId,int blockId, UpdateFloorDto dto);
     void Delete(int id);
 }

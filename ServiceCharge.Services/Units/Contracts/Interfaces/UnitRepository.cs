@@ -8,4 +8,5 @@ public interface UnitRepository
     void Update(Unit unit);
     void Remove(Unit unit);
     void AddRange(List<Unit> units);
+    HashSet<Unit> GetAllByFloorId(int floorId);
 }

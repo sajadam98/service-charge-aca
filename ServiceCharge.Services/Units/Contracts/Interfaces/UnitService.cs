@@ -6,4 +6,5 @@ public interface UnitService
     void Update(int id, UpdateUnitDto dto);
     void Delete(int id);
     void AddRange(int floorId , List<AddUnitDto> unitDTOs);
+    void DeleteByFloorId(int floorId);
 }

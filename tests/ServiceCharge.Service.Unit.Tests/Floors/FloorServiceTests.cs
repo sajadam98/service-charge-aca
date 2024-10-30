@@ -124,7 +124,7 @@ public class FloorServiceTests : BusinessIntegrationTest
 
         var dto = FloorFactory.UpdateFloorDto("Updated!", 8);
 
-        _sut.Update(floor1.Id, dto);
+        _sut.Update(floor1.Id, block1.Id,dto);
 
         var actual = ReadContext.Set<Floor>()
             .FirstOrDefault(_ => _.Id == floor1.Id);
@@ -160,7 +160,7 @@ public class FloorServiceTests : BusinessIntegrationTest
 
         var dto = FloorFactory.UpdateFloorDto("Updated!");
 
-        var actual = () => _sut.Update(floor1.Id, dto);
+        var actual = () => _sut.Update(floor1.Id,block1.Id, dto);
 
         actual.Should().ThrowExactly<FloorHasMaxUnitsCountException>();
     }
@@ -178,7 +178,7 @@ public class FloorServiceTests : BusinessIntegrationTest
 
         var dto = FloorFactory.UpdateFloorDto(floor2.Name, 60);
 
-        var actual = () => _sut.Update(floor.Id, dto);
+        var actual = () => _sut.Update(floor.Id,block.Id, dto);
 
         actual.Should().ThrowExactly<FloorNameDuplicateException>();
     }
@@ -196,7 +196,7 @@ public class FloorServiceTests : BusinessIntegrationTest
 
         var dto = FloorFactory.UpdateFloorDto(floor.Name, 60);
 
-        _sut.Update(floor.Id, dto);
+        _sut.Update(floor.Id, block.Id,dto);
 
         ReadContext.Set<Floor>().Should().ContainSingle(f =>
             f.Id == floor.Id && f.Name == dto.Name &&

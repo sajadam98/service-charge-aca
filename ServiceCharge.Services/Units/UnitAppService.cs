@@ -69,4 +69,13 @@ public class UnitAppService(
         unitRepository.AddRange(units);
         unitOfWork.Save();
     }
+
+    public void DeleteByFloorId(int floorId)
+    {
+        var units = unitRepository.GetAllByFloorId(floorId);
+        foreach (var unit in units)
+        {
+            unitRepository.Remove(unit);
+        }
+    }
 }
