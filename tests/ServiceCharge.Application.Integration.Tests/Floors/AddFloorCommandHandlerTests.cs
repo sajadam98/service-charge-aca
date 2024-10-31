@@ -57,6 +57,7 @@ public class AddFloorCommandHandlerTests : BusinessIntegrationTest
                 }
             ]
         };
+        
         _floorService.Setup(s => s.Add(block.Id,
             It.Is<AddFloorDto>(dto =>
                 dto.Name == command.Name &&

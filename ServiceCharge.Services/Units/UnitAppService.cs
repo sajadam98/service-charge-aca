@@ -31,20 +31,21 @@ public class UnitAppService(
 
     public void Update(int id, UpdateUnitDto dto)
     {
+        var unit = unitRepository.Find(id)
+                   ?? throw new UnitNotFoundException();
+
+        var floor = floorRepository.Find(unit.FloorId);
+        if (floorRepository.UnitsCount(unit.FloorId) >= floor.UnitCount)
+            throw new FloorHasMaxUnitsCountException();
+
         var isDuplicate = unitRepository.IsDuplicate(dto.Name);
         if (isDuplicate)
             throw new UnitNameDuplicateException();
 
-        var floor = floorRepository.Find(id);
-        if (floorRepository.UnitsCount(id) >= floor.UnitCount)
-            throw new FloorHasMaxUnitsCountException();
-
-        var unit = unitRepository.Find(id)
-                   ?? throw new UnitNotFoundException();
 
         unit.Name = dto.Name;
         unit.IsActive = dto.IsActive;
-        unit.FloorId = floor.Id;
+        unit.FloorId = dto.FloorId;
         unitRepository.Update(unit);
         unitOfWork.Save();
     }
@@ -67,6 +68,26 @@ public class UnitAppService(
             IsActive = d.IsActive
         }).ToList();
         unitRepository.AddRange(units);
+        unitOfWork.Save();
+    }
+
+    public void UpdateRange(int floorId,
+        HashSet<UpdateUnitsOfFloorDto> updateDTOs)
+    {
+        var unitIds = updateDTOs.Select(u => u.Id).ToList();
+        var units = unitRepository.FindByIds(floorId,unitIds);
+
+        if (units.Count != updateDTOs.Count)
+            throw new OneOrMoreUnitNotFoundException();
+        
+        units.ForEach(unit =>
+        {
+            var dto = updateDTOs.First(d=>d.Id==unit.Id);
+            unit.IsActive = dto.IsActive;
+            unit.Name = dto.Name;
+        });
+        
+        unitRepository.UpdateRange(units);
         unitOfWork.Save();
     }
 }

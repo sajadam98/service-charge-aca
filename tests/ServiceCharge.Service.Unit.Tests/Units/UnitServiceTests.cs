@@ -1,4 +1,5 @@
-﻿using ServiceCharge.TestTools.Blocks;
+﻿using ServiceCharge.Application.Floors.Handlers.UpdateFloors.Contracts.DTOs;
+using ServiceCharge.TestTools.Blocks;
 using ServiceCharge.TestTools.Floors;
 using ServiceCharge.TestTools.Infrastructure.DataBaseConfig.Integration;
 using ServiceCharge.TestTools.Units;
@@ -32,7 +33,7 @@ public class UnitServiceTests : BusinessIntegrationTest
         var actual = ReadContext.Set<Entities.Units.Unit>().Single();
 
         actual.Should().BeEquivalentTo(UnitFactory
-            .Create(dto.Name, floor1.Id, dto.IsActive), o => o
+            .Create(floor1.Id, dto.Name, dto.IsActive), o => o
             .Excluding(u => u.Id));
     }
 
@@ -59,7 +60,7 @@ public class UnitServiceTests : BusinessIntegrationTest
         var floor1 = FloorFactory.Generate(block1.Id, "Floor1", 3);
         Save(floor1);
 
-        var unit1 = UnitFactory.Create(unitName, floor1.Id);
+        var unit1 = UnitFactory.Create(floor1.Id, unitName);
         Save(unit1);
 
         var dto = UnitFactory.AddUnitDto(unitName);
@@ -80,7 +81,7 @@ public class UnitServiceTests : BusinessIntegrationTest
         Save(block1);
         var floor1 = FloorFactory.Generate(block1.Id, "Floor1");
         Save(floor1);
-        var unit1 = UnitFactory.Create("Unit1", floor1.Id);
+        var unit1 = UnitFactory.Create(floor1.Id);
         Save(unit1);
 
         var dto = UnitFactory.AddUnitDto("Unit2");
@@ -101,7 +102,7 @@ public class UnitServiceTests : BusinessIntegrationTest
         Save(block1);
         var floor1 = FloorFactory.Generate(block1.Id, "Floor1", 2);
         Save(floor1);
-        var unit1 = UnitFactory.Create("Unit1", floor1.Id);
+        var unit1 = UnitFactory.Create(floor1.Id);
         Save(unit1);
 
         var dto = UnitFactory.UpdateUnitDto("Updated!");
@@ -111,7 +112,13 @@ public class UnitServiceTests : BusinessIntegrationTest
         var actual = ReadContext.Set<Entities.Units.Unit>()
             .FirstOrDefault();
 
-        actual.Should().BeEquivalentTo(dto);
+        actual.Should().BeEquivalentTo(new Entities.Units.Unit
+        {
+            Id = unit1.Id,
+            Name = dto.Name,
+            IsActive = dto.IsActive,
+            FloorId = dto.FloorId,
+        });
     }
 
     [Theory]
@@ -134,9 +141,9 @@ public class UnitServiceTests : BusinessIntegrationTest
         Save(block1);
         var floor1 = FloorFactory.Generate(block1.Id, "Floor1", block1.Id);
         Save(floor1);
-        var unit1 = UnitFactory.Create("Unit1", floor1.Id);
+        var unit1 = UnitFactory.Create(floor1.Id);
         Save(unit1);
-        var unit2 = UnitFactory.Create("Unit2", floor1.Id);
+        var unit2 = UnitFactory.Create(floor1.Id);
         Save(unit2);
 
         _sut.Delete(unit1.Id);
@@ -144,7 +151,7 @@ public class UnitServiceTests : BusinessIntegrationTest
         var actual = ReadContext.Set<Entities.Units.Unit>().Single();
 
         actual.Should().BeEquivalentTo(UnitFactory
-            .Create(unit2.Name, unit2.FloorId, unit2.IsActive), o => o
+            .Create(unit2.FloorId, unit2.Name, unit2.IsActive), o => o
             .Excluding(u => u.Id));
     }
 
@@ -157,5 +164,137 @@ public class UnitServiceTests : BusinessIntegrationTest
 
         actual.Should().ThrowExactly<UnitNotFoundException>();
         ReadContext.Set<Entities.Units.Unit>().Should().BeEmpty();
+    }
+
+    [Fact]
+    public void UpdateRange_update_a_list_of_units_from_a_floor_properly()
+    {
+        var block1 = BlockFactory.Create();
+        Save(block1);
+        var floor1 = FloorFactory.Generate(block1.Id);
+        Save(floor1);
+        var unit1 = UnitFactory.Create(floor1.Id);
+        Save(unit1);
+        var unit2 = UnitFactory.Create(floor1.Id);
+        Save(unit2);
+        var unit3 = UnitFactory.Create(floor1.Id);
+        Save(unit3);
+        var updateDTOs = new HashSet<UpdateUnitsOfFloorDto>();
+        var dto1 = new UpdateUnitsOfFloorDto
+        {
+            Name = "Updated1",
+            UnitCount = 80,
+            Id = unit1.Id,
+            IsActive = false
+        };
+        var dto2 = new UpdateUnitsOfFloorDto
+        {
+            Name = "Updated2",
+            UnitCount = 25,
+            Id = unit3.Id,
+            IsActive = true
+        };
+        updateDTOs.Add(dto1);
+        updateDTOs.Add(dto2);
+
+        _sut.UpdateRange(floor1.Id, updateDTOs);
+
+        var expected = ReadContext.Set<Entities.Units.Unit>().ToList();
+        expected.Should().HaveCount(3);
+        expected.Should().ContainEquivalentOf(new Entities.Units.Unit
+        {
+            Id = unit1.Id,
+            Name = dto1.Name,
+            IsActive = dto1.IsActive,
+            FloorId = floor1.Id
+        });
+        expected.Should().ContainEquivalentOf(unit2);
+        expected.Should().ContainEquivalentOf(new Entities.Units.Unit
+        {
+            Id = unit3.Id,
+            Name = dto2.Name,
+            IsActive = dto2.IsActive,
+            FloorId = floor1.Id
+        });
+    }
+
+    [Theory]
+    [InlineData(-1)]
+    public void
+        UpdateRange_throw_exception_if_one_or_more_units_dosenot_exists(
+            int dummyId)
+    {
+        var block1 = BlockFactory.Create();
+        Save(block1);
+        var floor1 = FloorFactory.Generate(block1.Id);
+        Save(floor1);
+        var unit1 = UnitFactory.Create(floor1.Id);
+        Save(unit1);
+        var updateDTOs = new HashSet<UpdateUnitsOfFloorDto>();
+        var dto1 = new UpdateUnitsOfFloorDto
+        {
+            Name = "Updated1",
+            UnitCount = 80,
+            Id = unit1.Id,
+            IsActive = false
+        };
+        var dto2 = new UpdateUnitsOfFloorDto
+        {
+            Name = "Updated2",
+            UnitCount = 25,
+            Id = dummyId,
+            IsActive = true
+        };
+        updateDTOs.Add(dto1);
+        updateDTOs.Add(dto2);
+
+        var actual = () => _sut.UpdateRange(floor1.Id, updateDTOs);
+        actual.Should().ThrowExactly<OneOrMoreUnitNotFoundException>();
+        var expected = ReadContext.Set<Entities.Units.Unit>().ToList();
+        expected.Should().HaveCount(1);
+        expected.Should().ContainEquivalentOf(unit1);
+    }
+
+    [Fact]
+    public void
+        UpdateRange_throw_exception_when_unit_dose_not_belong_to_a_floor()
+    {
+        var block1 = BlockFactory.Create();
+        Save(block1);
+        var floor1 = FloorFactory.Generate(block1.Id);
+        Save(floor1);
+        var floor2 = FloorFactory.Generate(block1.Id);
+        Save(floor2);
+        var unit1 = UnitFactory.Create(floor1.Id);
+        Save(unit1);
+        var unit2 = UnitFactory.Create(floor1.Id);
+        Save(unit2);
+        var unit3 = UnitFactory.Create(floor2.Id);
+        Save(unit3);
+        var updateDTOs = new HashSet<UpdateUnitsOfFloorDto>();
+        var dto1 = new UpdateUnitsOfFloorDto
+        {
+            Name = "Updated1",
+            UnitCount = 80,
+            Id = unit1.Id,
+            IsActive = false
+        };
+        var dto2 = new UpdateUnitsOfFloorDto
+        {
+            Name = "Updated2",
+            UnitCount = 25,
+            Id = unit3.Id,
+            IsActive = true
+        };
+        updateDTOs.Add(dto1);
+        updateDTOs.Add(dto2);
+
+        var actual = () => _sut.UpdateRange(floor1.Id, updateDTOs);
+        actual.Should().ThrowExactly<OneOrMoreUnitNotFoundException>();
+        var expected = ReadContext.Set<Entities.Units.Unit>().ToList();
+        expected.Should().HaveCount(3);
+        expected.Should().ContainEquivalentOf(unit1);
+        expected.Should().ContainEquivalentOf(unit2);
+        expected.Should().ContainEquivalentOf(unit3);
     }
 }

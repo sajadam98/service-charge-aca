@@ -31,4 +31,16 @@ public class EFUnitRepository(EfDataContext context) : UnitRepository
     {
         context.Set<Unit>().AddRange(units);
     }
+
+    public List<Unit> FindByIds(int floorId, List<int> unitIds)
+    {
+        return context.Set<Unit>()
+            .Where(u => unitIds.Contains(u.Id) && u.FloorId == floorId)
+            .ToList();
+    }
+
+    public void UpdateRange(List<Unit> units)
+    {
+        context.Set<Unit>().UpdateRange(units);
+    }
 }

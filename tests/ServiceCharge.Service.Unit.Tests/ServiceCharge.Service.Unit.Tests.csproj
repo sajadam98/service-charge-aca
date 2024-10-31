@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\ServiceCharge.Application\ServiceCharge.Application.csproj" />
       <ProjectReference Include="..\..\ServiceCharge.Persistence.Ef\ServiceCharge.Persistence.Ef.csproj" />
       <ProjectReference Include="..\ServiceCharge.TestTools\ServiceCharge.TestTools.csproj" />
     </ItemGroup>

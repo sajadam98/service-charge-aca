@@ -8,4 +8,6 @@ public interface UnitRepository
     void Update(Unit unit);
     void Remove(Unit unit);
     void AddRange(List<Unit> units);
+    List<Unit> FindByIds(int floorId, List<int> unitIds);
+    void UpdateRange(List<Unit> units);
 }

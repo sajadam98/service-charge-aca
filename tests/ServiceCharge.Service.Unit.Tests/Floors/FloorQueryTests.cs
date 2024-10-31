@@ -13,43 +13,44 @@ public class FloorQueryTests : BusinessIntegrationTest
     {
         _sut = new EFFloorQuery(ReadContext);
     }
+
     [Fact]
     public void GetById_get_a_floor_properly()
     {
-        var block1 = BlockFactory.Create("Block1",2);
-        var floor1 = FloorFactory.Generate(block1.Id,"Floor1",unitCount:5);
+        var block1 = BlockFactory.Create("Block1", 2);
+        var floor1 = FloorFactory.Generate(block1.Id, "Floor1", unitCount: 5);
         block1.Floors.Add(floor1);
-        var floor2 = FloorFactory.Generate(block1.Id,"Floor2",unitCount:7);
+        var floor2 = FloorFactory.Generate(block1.Id, "Floor2", unitCount: 7);
         block1.Floors.Add(floor2);
         Save(block1);
-        var block2 = BlockFactory.Create("Block2",5);
+        var block2 = BlockFactory.Create("Block2", 5);
         Save(block2);
 
         var result = _sut.GetById(floor1.Id);
-        
+
         result.Name.Should().Be(floor1.Name);
         result.UnitCount.Should().Be(floor1.UnitCount);
         result.BlockId.Should().Be(floor1.BlockId);
         result.Id.Should().Be(floor1.Id);
     }
-    
+
     [Fact]
     public void GetAll_get_all_floors_properly()
     {
         var block1 = BlockFactory.Create("block1");
         Save(block1);
-        var floor1 = FloorFactory.Generate(block1.Id,"floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id, "floor1", block1.Id);
         Save(floor1);
-        var floor2 = FloorFactory.Generate(block1.Id,"floor2",block1.Id);
+        var floor2 = FloorFactory.Generate(block1.Id, "floor2", block1.Id);
         Save(floor2);
 
         var result = _sut.GetAll();
 
         result.Should().HaveCount(2);
         result.Should().ContainEquivalentOf(FloorFactory
-            .GetAll(floor1.Id,floor1.BlockId,floor1.Name,floor1.UnitCount));
+            .GetAll(floor1.Id, floor1.BlockId, floor1.Name, floor1.UnitCount));
         result.Should().ContainEquivalentOf(FloorFactory
-            .GetAll(floor2.Id,floor2.BlockId,floor2.Name,floor2.UnitCount));
+            .GetAll(floor2.Id, floor2.BlockId, floor2.Name, floor2.UnitCount));
     }
 
     [Fact]
@@ -57,21 +58,21 @@ public class FloorQueryTests : BusinessIntegrationTest
     {
         var block1 = BlockFactory.Create("block1");
         Save(block1);
-        var floor1 = FloorFactory.Generate(block1.Id,"floor1",block1.Id);
+        var floor1 = FloorFactory.Generate(block1.Id, "floor1", block1.Id);
         Save(floor1);
-        var unit1 = UnitFactory.Create("unit1",floor1.Id);
+        var unit1 = UnitFactory.Create(floor1.Id);
         Save(unit1);
-        var unit2 = UnitFactory.Create("unit2",floor1.Id);
+        var unit2 = UnitFactory.Create(floor1.Id);
         Save(unit2);
-        var floor2 = FloorFactory.Generate(block1.Id,"floor2",block1.Id);
+        var floor2 = FloorFactory.Generate(block1.Id, "floor2", block1.Id);
         Save(floor2);
-        var unit3 = UnitFactory.Create("unit3",floor2.Id);
+        var unit3 = UnitFactory.Create(floor2.Id);
         Save(unit3);
-        var unit4 = UnitFactory.Create("unit4",floor2.Id);
+        var unit4 = UnitFactory.Create(floor2.Id);
         Save(unit4);
 
         var result = _sut.GetAllFloorsWithUnits();
-        
+
         var floor1Dto = new GetAllFloorsWithUnitsBuilder()
             .WithName(floor1.Name)
             .WithUnitCount(floor1.UnitCount)
@@ -111,6 +112,5 @@ public class FloorQueryTests : BusinessIntegrationTest
         result.Should().ContainEquivalentOf(floor1Dto);
         result.Should().ContainEquivalentOf(floor2Dto);
         result.Should().HaveCount(2);
-
     }
 }

@@ -153,9 +153,9 @@ public class FloorServiceTests : BusinessIntegrationTest
         Save(block1);
         var floor1 = FloorFactory.Generate(block1.Id, "Floor1", 2);
         Save(floor1);
-        var unit1 = UnitFactory.Create("Unit1", floor1.Id);
+        var unit1 = UnitFactory.Create( floor1.Id);
         Save(unit1);
-        var unit2 = UnitFactory.Create("Unit2", floor1.Id);
+        var unit2 = UnitFactory.Create(floor1.Id);
         Save(unit2);
 
         var dto = FloorFactory.UpdateFloorDto("Updated!");
@@ -240,7 +240,7 @@ public class FloorServiceTests : BusinessIntegrationTest
         Save(block1);
         var floor1 = FloorFactory.Generate(block1.Id);
         Save(floor1);
-        var unit1 = UnitFactory.Create("Unit1", floor1.Id);
+        var unit1 = UnitFactory.Create( floor1.Id);
         Save(unit1);
 
         var actual = () => _sut.Delete(floor1.Id);
