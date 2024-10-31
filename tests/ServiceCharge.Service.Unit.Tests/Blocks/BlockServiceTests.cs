@@ -6,21 +6,12 @@ namespace ServiceCharge.Service.Unit.Tests.Blocks;
 public class BlockServiceTests : BusinessIntegrationTest
 {
     private readonly BlockService _sut;
-    private readonly Mock<DateTimeService> _dateTimeServiceMock;
+    private readonly DateTime _fakeDateTime;
 
     public BlockServiceTests()
     {
-        var repository = new EFBlockRepository(SetupContext);
-        _dateTimeServiceMock = new Mock<DateTimeService>();
-        _dateTimeServiceMock.Setup(_ => _.NowUtc)
-            .Returns(new DateTime(2022, 1, 1));
-
-        var unitOfWork = new EfUnitOfWork(SetupContext);
-
-        _sut = new BlockAppService(
-            repository,
-            unitOfWork,
-            _dateTimeServiceMock.Object);
+        _fakeDateTime = new DateTime(2020, 10, 05);
+        _sut = BlockServiceFactory.CreateService(SetupContext, _fakeDateTime);
     }
 
     [Fact]
@@ -32,7 +23,7 @@ public class BlockServiceTests : BusinessIntegrationTest
 
         var actual = ReadContext.Set<Block>().Single();
         actual.Should().BeEquivalentTo(BlockFactory
-            .Create(dto.Name, dto.FloorCount),_=>_
+            .Create(dto.Name, dto.FloorCount, _fakeDateTime),_=>_
             .Excluding(b=>b.Id));
     }
 

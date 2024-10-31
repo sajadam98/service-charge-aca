@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\ServiceCharge.Application\ServiceCharge.Application.csproj" />
       <ProjectReference Include="..\..\ServiceCharge.Entities\ServiceCharge.Entities.csproj" />
       <ProjectReference Include="..\..\ServiceCharge.Persistence.Ef\ServiceCharge.Persistence.Ef.csproj" />
       <ProjectReference Include="..\..\ServiceCharge.Services\ServiceCharge.Services.csproj" />
@@ -18,6 +19,7 @@
       <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+      <PackageReference Include="Moq" Version="4.20.72" />
       <PackageReference Include="xunit.extensibility.core" Version="2.5.3" />
         <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.8" />
     </ItemGroup>

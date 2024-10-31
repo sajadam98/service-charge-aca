@@ -2,7 +2,7 @@
 
 namespace ServiceCharge.Application.Floors.Handlers.AddFloors.Contracts;
 
-public interface AddFloorHandler
+public interface UpdateFloorHandler
 {
     int Handle(int blockId, AddFloorWithUnitsCommand command);
 }

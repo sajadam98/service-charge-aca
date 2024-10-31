@@ -2,28 +2,28 @@
 using ServiceCharge.Application.Floors.Handlers.AddFloors.Contracts.DTOs;
 using ServiceCharge.Services.Units.Contracts.Dtos;
 
-namespace ServiceCharge.Application.Floors.Handlers.AddFloors;
+namespace ServiceCharge.Application.Floors.Handlers.UpdateFloors;
 
-public class AddFloorCommandHandler(
+public class UpdateFloorCommandHandler(
     FloorService floorService,
     UnitService unitService,
     UnitOfWork unitOfWork) : AddFloorHandler
 {
-    public int Handle(int blockId, AddFloorWithUnitsCommand command)
+    public int Handle(int floorId, AddFloorWithUnitsCommand command)
     {
         unitOfWork.Begin();
         try
         {
-            var addFloorDto = new AddFloorDto
+            var updateFloorDto = new UpdateFloorDto
             {
                 Name = command.Name,
                 UnitCount = command.UnitCount
             };
-            var floorId = floorService.Add(blockId, addFloorDto);
+            floorService.Update(floorId, updateFloorDto);
             unitService.AddRange(floorId, command.Units.Select(u =>
                 new AddUnitDto
                 {
-                    Name = "Sajjad" + command.Units.Count,
+                    Name = u.Name,
                     IsActive = u.IsActive
                 }).ToList());
             unitOfWork.Commit();

@@ -8,18 +8,13 @@ public class BusinessIntegrationTest : EFDataContextDatabaseFixture
     protected EfDataContext Context { get; init; }
     protected EfDataContext SetupContext { get; init; }
     protected EfDataContext ReadContext { get; init; }
-    protected string TenantId { get; } = "Tenant_Id";
     
-    protected BusinessIntegrationTest(string? tenantId = null)
+    protected BusinessIntegrationTest()
     {
-        if (tenantId != null)
-        {
-            TenantId = tenantId;
-        }
 
-        SetupContext = CreateDataContext(TenantId);
-        Context = CreateDataContext(TenantId);
-        ReadContext = CreateDataContext(TenantId);
+        SetupContext = CreateDataContext();
+        Context = CreateDataContext();
+        ReadContext = CreateDataContext();
     }
     protected void Save<T>(T entity)
         where T : class
